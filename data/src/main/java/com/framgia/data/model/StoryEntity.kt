@@ -48,7 +48,7 @@ class StoryEntityMapper @Inject constructor(
             updatedDate = entity.updatedDate,
             createdDate = entity.createdDate,
             publishedDate = entity.publishedDate,
-            multimedia = multimediaEntityMapper.mapListToDomain(entity.multimedia),
+            multimedia = entity.multimedia.map { multimediaEntityMapper.mapToDomain(it) },
             shortUrl = entity.shortUrl
     )
 
@@ -63,23 +63,8 @@ class StoryEntityMapper @Inject constructor(
             updatedDate = model.updatedDate,
             createdDate = model.createdDate,
             publishedDate = model.publishedDate,
-            multimedia = multimediaEntityMapper.mapListToEntity(model.multimedia),
+            multimedia = model.multimedia.map { multimediaEntityMapper.mapToEntity(it) },
             shortUrl = model.shortUrl
     )
 
-    fun mapListToDomain(entities: List<StoryEntity>): List<Story> {
-        val result = mutableListOf<Story>()
-        for (storyEntity: StoryEntity in entities) {
-            result.add(mapToDomain(storyEntity))
-        }
-        return result
-    }
-
-    fun mapListToEntity(models: List<Story>): List<StoryEntity> {
-        val result = mutableListOf<StoryEntity>()
-        for (story: Story in models) {
-            result.add(mapToEntity(story))
-        }
-        return result
-    }
 }

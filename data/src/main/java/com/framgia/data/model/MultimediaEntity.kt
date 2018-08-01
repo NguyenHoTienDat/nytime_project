@@ -1,5 +1,6 @@
 package com.framgia.data.model
 
+import com.framgia.data.base.EntityMapper
 import com.framgia.data.base.ModelEntity
 import com.framgia.domain.model.MultiMedia
 import com.google.gson.annotations.SerializedName
@@ -11,17 +12,14 @@ data class MultimediaEntity(
         @SerializedName("caption")
         var caption: String) : ModelEntity()
 
-class MultimediaEntityMapper @Inject constructor() {
+class MultimediaEntityMapper @Inject constructor(): EntityMapper<MultiMedia, MultimediaEntity> {
+    override fun mapToDomain(entity: MultimediaEntity): MultiMedia = MultiMedia(
+            url = entity.url,
+            caption = entity.caption
+    )
 
-    fun mapListToDomain(entities: List<MultimediaEntity>) = mutableListOf<MultiMedia>().apply {
-        entities.forEach { it ->
-            this.add(MultiMedia(url = it.url, caption = it.caption))
-        }
-    }
-
-    fun mapListToEntity(models: List<MultiMedia>) = mutableListOf<MultimediaEntity>().apply {
-        models.forEach { it ->
-            this.add(MultimediaEntity(url = it.url, caption = it.caption))
-        }
-    }
+    override fun mapToEntity(model: MultiMedia): MultimediaEntity = MultimediaEntity(
+            url = model.url,
+            caption = model.caption
+    )
 }
