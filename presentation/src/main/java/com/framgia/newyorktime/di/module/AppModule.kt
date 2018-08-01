@@ -16,7 +16,7 @@ import javax.inject.Singleton
  * Description:
  */
 
-@Module(includes = [NetworkModule::class, RepositoryModule::class])
+@Module(includes = [NetworkModule::class, RepositoryModule::class, ViewModelModule::class])
 class AppModule {
 
     @Singleton

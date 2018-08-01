@@ -11,13 +11,11 @@ import javax.inject.Named
 
 class StoryRepositoryImpl @Inject constructor(
         private val mStoryApi: StoryApi,
-        private val mMapper: StoryEntityMapper,
-        @Named(NetworkModule.API_KEY_NYTIME_NAMED)
-        private val nyTimeKey: String
+        private val mMapper: StoryEntityMapper
 ) : StoryRepository {
 
     override fun getTopStories(type: String): Single<List<Story>> {
-        return mStoryApi.getTopStories(type, nyTimeKey).map {
+        return mStoryApi.getTopStories(type).map {
             it.results.map { mMapper.mapToDomain(it) }
         }
     }

@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">NewYorkTime</string>
+    <string name="story_section_home">home</string>
+    <string name="story_section_arts">arts</string>
+    <string name="story_section_automobiles">automobiles</string>
+    <string name="story_section_books">books</string>
+    <string name="story_section_business">business</string>
+    <string name="story_section_fashion">fashion</string>
+    <string name="story_section_food">food</string>
+    <string name="story_section_health">health</string>
+    <string name="story_section_movies">movies</string>
+    <string name="story_section_sports">sports</string>
+    <string name="story_section_technology">technology</string>
+    <string name="story_section_travel">travel</string>
+    <string name="story_section_world">world</string>
+    <string name="story_section_magazine">magazine</string>
+    <string name="story_section_science">science</string>
 </resources>

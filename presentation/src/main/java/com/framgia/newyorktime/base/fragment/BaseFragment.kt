@@ -1,5 +1,7 @@
 package com.framgia.newyorktime.base.fragment
 
+import android.arch.lifecycle.LifecycleOwner
+import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
@@ -12,13 +14,14 @@ import android.view.ViewGroup
 import com.framgia.newyorktime.base.viewmodel.BaseViewModel
 import com.framgia.newyorktime.util.custom.autoCleared
 import com.framgia.newyorktime.util.performDependenceInjection
+import javax.inject.Inject
 
 /**
  * Created: 31/07/2018
  * By: Sang
  * Description:
  */
-abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment() {
+abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment(), LifecycleOwner {
 
     abstract val bindingVariable: Int
 
@@ -28,6 +31,9 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
     abstract val layoutId: Int
 
     var viewDataBinding by autoCleared<T>()
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onAttach(context: Context?) {
         performDependenceInjection()
@@ -54,6 +60,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
             setVariable(bindingVariable, viewModel)
             executePendingBindings()
             setLifecycleOwner(this@BaseFragment)
+            lifecycle.addObserver(viewModel)
         }
     }
 

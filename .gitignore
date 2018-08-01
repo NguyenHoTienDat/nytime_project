@@ -17,6 +17,13 @@ out/
 .gradle/
 build/
 gradle.properties
+<<<<<<< aec6b89e33857fae22d26375e9babcf691f2efac
+=======
+gradle/
+gradlew
+gradlew.bat
+settings.gradle
+>>>>>>> top stories base display
 
 # Local configuration file (sdk path, etc)
 local.properties

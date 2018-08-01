@@ -1,5 +1,6 @@
 package com.framgia.newyorktime.base.viewmodel
 
+import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.ViewModel
 import com.framgia.domain.base.UseCase
 import io.reactivex.disposables.CompositeDisposable
@@ -9,7 +10,7 @@ import io.reactivex.disposables.CompositeDisposable
  * By: Sang
  * Description:
  */
-class BaseViewModel(private vararg val useCases: UseCase<*, *>) : ViewModel() {
+open class BaseViewModel(private vararg val useCases: UseCase<*, *>) : ViewModel(), LifecycleObserver {
 
     val compositeDisposable = CompositeDisposable()
 
