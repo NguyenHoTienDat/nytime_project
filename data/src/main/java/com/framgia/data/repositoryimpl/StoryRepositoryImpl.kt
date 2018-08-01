@@ -18,7 +18,7 @@ class StoryRepositoryImpl @Inject constructor(
 
     override fun getTopStories(type: String): Single<List<Story>> {
         return mStoryApi.getTopStories(type, nyTimeKey).map {
-            mMapper.mapListToDomain(it.results)
+            it.results.map { mMapper.mapToDomain(it) }
         }
     }
 }
