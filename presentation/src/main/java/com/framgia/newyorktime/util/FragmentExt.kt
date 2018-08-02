@@ -3,6 +3,9 @@ package com.framgia.newyorktime.util
 import android.content.Context
 import android.os.IBinder
 import android.support.v4.app.Fragment
+import android.support.v7.app.ActionBar
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.framgia.newyorktime.R
@@ -49,4 +52,12 @@ fun Fragment.replaceFragment(tag: String, isAddToBackStack: Boolean = false, tra
 
 fun Fragment.performDependenceInjection() {
     AndroidSupportInjection.inject(this)
+}
+
+fun Fragment.setupActionBar(toolbar: Toolbar, action: ActionBar.() -> Unit) {
+    if (activity is AppCompatActivity) {
+        val a = (activity as AppCompatActivity)
+        a.setSupportActionBar(toolbar)
+        a.supportActionBar?.run(action)
+    }
 }

@@ -10,7 +10,8 @@ import io.reactivex.disposables.CompositeDisposable
  * By: Sang
  * Description:
  */
-open class BaseViewModel(private vararg val useCases: UseCase<*, *>) : ViewModel(), LifecycleObserver {
+open class BaseViewModel(private vararg val useCases: UseCase<*, *>) : ViewModel(),
+    LifecycleObserver {
 
     val compositeDisposable = CompositeDisposable()
 
