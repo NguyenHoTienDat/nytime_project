@@ -1,34 +1,41 @@
 package com.framgia.newyorktime.util
 
+import android.view.View
+import com.framgia.newyorktime.R
 import java.text.SimpleDateFormat
 import java.util.*
 
-private const val TIME_FORMAT = "yyyy-MM-dd"
-private const val NOTICE_HOUR = "h ago"
-private const val NOTICE_MINUTE = "m ago"
-private const val NOTICE_NOW = "just now"
+object DateTimeUtil {
 
-fun String.convertNewsPublishTime(): String {
-    return if (SimpleDateFormat(TIME_FORMAT).format(Calendar.getInstance().time)
-            == this.substring(0, 10))
-        calculateDiffTime(this@convertNewsPublishTime)
-    else this.substring(0, 10)
-}
+    private const val TIME_FORMAT = "yyyy-MM-dd"
 
-/**
- * Calculate diff time between publish time and current time
- * We temporarily ignore time zone, it will be handled later
- */
-private fun calculateDiffTime(publishTime: String): String {
-    val hourPublish = publishTime.substring(11,13)
-    val minPublish = publishTime.substring(14,16)
-    val curHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-    val curMin = Calendar.getInstance().get(Calendar.MINUTE)
-    if (curHour.toString() != hourPublish) {
-        return Math.abs(curHour - hourPublish.toInt()).toString() + NOTICE_HOUR
-    } else if (curMin.toString() != minPublish) {
-        return Math.abs(curMin - minPublish.toInt()).toString() + NOTICE_MINUTE
+    fun convertNewsPublishTime(view: View, beforeConvert: String): String {
+        val timeFormat = SimpleDateFormat(TIME_FORMAT)
+        val curTime = timeFormat.format(Calendar.getInstance().time)
+        val serverTime = timeFormat.format(timeFormat.parse(beforeConvert))
+        return if (curTime == serverTime)
+            calculateDiffTime(view, timeFormat.parse(beforeConvert))
+        else serverTime
     }
 
-    return NOTICE_NOW
+    /**
+     * Calculate diff time between publish time and current time
+     * We temporarily ignore time zone, it will be handled later
+     */
+    private fun calculateDiffTime(view: View, serverTime: Date): String {
+        val serCalendar = Calendar.getInstance().apply { time = serverTime }
+        val hourPublish = serCalendar.get(Calendar.HOUR_OF_DAY)
+        val minPublish = serCalendar.get(Calendar.MINUTE)
+        val curHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+        val curMin = Calendar.getInstance().get(Calendar.MINUTE)
+        if (curHour != hourPublish) {
+            return Math.abs(curHour - hourPublish).toString() +
+                    view.context.getString(R.string.notice_hour_title)
+        } else if (curMin != minPublish) {
+            return Math.abs(curMin - minPublish.toInt()).toString() +
+                    view.context.getString(R.string.notice_min_title)
+        }
+
+        return view.context.getString(R.string.notice_now_title)
+    }
 }

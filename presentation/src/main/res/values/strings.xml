@@ -15,4 +15,7 @@
     <string name="story_section_world">world</string>
     <string name="story_section_magazine">magazine</string>
     <string name="story_section_science">science</string>
+    <string name="notice_hour_title">h ago</string>
+    <string name="notice_min_title">m ago</string>
+    <string name="notice_now_title">just now</string>
 </resources>

@@ -3,7 +3,6 @@ package com.framgia.newyorktime.model.nytime
 import com.framgia.domain.model.Story
 import com.framgia.newyorktime.base.model.ItemMapper
 import com.framgia.newyorktime.base.model.ModelItem
-import com.framgia.newyorktime.util.convertNewsPublishTime
 import javax.inject.Inject
 
 data class StoryItem(val title: String,
@@ -11,9 +10,7 @@ data class StoryItem(val title: String,
                      val url: String,
                      val byline: String,
                      val imageUrl: String,
-                     val publishDate: String) : ModelItem() {
-    fun convertPublishDate() = publishDate.convertNewsPublishTime()
-}
+                     val publishDate: String) : ModelItem()
 
 class StoryItemMapper @Inject constructor() : ItemMapper<Story, StoryItem> {
 

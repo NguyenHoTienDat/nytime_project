@@ -6,6 +6,7 @@ import com.framgia.newyorktime.base.recyclerview.BaseRecyclerViewAdapter
 import com.framgia.newyorktime.base.recyclerview.BaseViewHolder
 import com.framgia.newyorktime.databinding.ItemStoryBinding
 import com.framgia.newyorktime.model.nytime.StoryItem
+import com.framgia.newyorktime.util.DateTimeUtil
 
 class TopStoryAdapter(private val callback: ((StoryItem) -> Unit)?)
     : BaseRecyclerViewAdapter<StoryItem, ItemStoryBinding, TopStoryAdapter.StoryHolder>(
@@ -33,7 +34,8 @@ class TopStoryAdapter(private val callback: ((StoryItem) -> Unit)?)
     inner class StoryHolder(binding: ItemStoryBinding) : BaseViewHolder<ItemStoryBinding>(binding) {
         fun bind(item: StoryItem) {
             binding.apply {
-                viewModel = item
+                story = item
+                dateUtil = DateTimeUtil
                 executePendingBindings()
             }
 

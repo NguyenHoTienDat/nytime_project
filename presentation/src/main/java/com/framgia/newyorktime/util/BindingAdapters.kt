@@ -19,8 +19,8 @@ fun setItemDivider(view: RecyclerView, state: Boolean) {
 }
 
 @BindingAdapter("imageUrl")
-fun setImageUrl(view: ImageView, url: String) {
-    Glide.with(view.context).load(url)
+fun setImageUrl(view: ImageView, url: String?) {
+    Glide.with(view.context).load(url ?: "")
             .apply(RequestOptions().placeholder(R.drawable.ic_no_image))
             .into(view)
 }
