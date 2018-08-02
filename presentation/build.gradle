@@ -12,6 +12,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath false
+            }
+        }
     }
     buildTypes {
         release {
@@ -69,4 +74,9 @@ dependencies {
     // module
     implementation des.module.domain
     implementation des.module.data
+
+    //glide
+    implementation des.glide.runtime
+    implementation des.glide.compiler
+
 }

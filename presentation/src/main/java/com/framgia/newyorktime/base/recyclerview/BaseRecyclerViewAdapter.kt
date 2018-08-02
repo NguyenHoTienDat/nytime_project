@@ -16,7 +16,7 @@ import java.util.concurrent.Executors
  * Description:
  */
 abstract class BaseRecyclerViewAdapter<T, V : ViewDataBinding, VH : BaseViewHolder<V>>(diffCallback: DiffUtil.ItemCallback<T>) :
-    ListAdapter<T, BaseViewHolder<V>>(
+    ListAdapter<T, VH>(
         AsyncDifferConfig.Builder<T>(diffCallback)
             .setBackgroundThreadExecutor(Executors.newSingleThreadExecutor())
             .build()

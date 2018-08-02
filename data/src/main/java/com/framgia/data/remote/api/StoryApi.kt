@@ -5,10 +5,13 @@ import com.framgia.data.remote.response.StoryWrapperResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface StoryApi {
-    @GET("{type}.json")
+    /*@GET("{type}.json")
     fun getTopStories(@Path("type") type: String, @Query("api-key") key: String)
+            : Single<StoryWrapperResponse<StoryEntity>>*/
+
+    @GET("{type}.json")
+    fun getTopStories(@Path("type") type: String)
             : Single<StoryWrapperResponse<StoryEntity>>
 }

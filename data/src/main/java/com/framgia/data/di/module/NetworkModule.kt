@@ -1,8 +1,8 @@
 package com.framgia.data.di.module
 
 import com.framgia.data.BuildConfig
-import com.framgia.data.remote.api.StoryApi
 import com.framgia.data.remote.api.MovieApi
+import com.framgia.data.remote.api.StoryApi
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -31,8 +31,19 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    @Named(MOVIE_DB_CLIENT_NAME)
-    fun provideOkHttpClient(builder: OkHttpClient.Builder): OkHttpClient =
+    @Named(BASE_TOP_STORIES_URL)
+    fun provideNyTimeOkHttpClient(builder: OkHttpClient.Builder): OkHttpClient =
+            builder.addInterceptor { chain ->
+                val request = chain.request().newBuilder()
+                        .addHeader("api-key", BuildConfig.API_NYTIME_KEY)
+                        .build()
+                return@addInterceptor chain.proceed(request)
+            }.build()
+
+    @Provides
+    @Singleton
+    @Named(MOVIE_DB_NAME)
+    fun provideMovieOkHttpClient(builder: OkHttpClient.Builder): OkHttpClient =
         builder.addInterceptor { chain ->
             val request = chain.request().newBuilder()
                 .addHeader("api_key", BuildConfig.MOVIE_API_KEY)
@@ -42,7 +53,8 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofitBuilder(@Named(MOVIE_DB_CLIENT_NAME) okHttpClient: OkHttpClient): Retrofit.Builder =
+    @Named(MOVIE_DB_NAME)
+    fun provideMovieRetrofitBuilder(@Named(MOVIE_DB_NAME) okHttpClient: OkHttpClient): Retrofit.Builder =
         Retrofit.Builder()
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
@@ -51,27 +63,30 @@ class NetworkModule {
     @Provides
     @Singleton
     @Named(BASE_TOP_STORIES_URL)
-    fun provideNyTimeRetrofit(builder : Retrofit.Builder): Retrofit
-            = builder.baseUrl(BASE_TOP_STORIES_URL).build()
+    fun provideNyTimeRetrofitBuilder(@Named(BASE_TOP_STORIES_URL) okHttpClient: OkHttpClient): Retrofit.Builder =
+            Retrofit.Builder()
+                    .client(okHttpClient)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 
     @Provides
     @Singleton
-    fun provideStoryApi(@Named(BASE_TOP_STORIES_URL) retrofit: Retrofit): StoryApi
-            = retrofit.create(StoryApi::class.java)
+    @Named(BASE_TOP_STORIES_URL)
+    fun provideNyTimeRetrofit(@Named(BASE_TOP_STORIES_URL) builder: Retrofit.Builder): Retrofit = builder.baseUrl(BASE_TOP_STORIES_URL).build()
 
     @Provides
     @Singleton
-    @Named(API_KEY_NYTIME_NAMED)
-    fun provideApiKey() = BuildConfig.API_NYTIME_KEY
+    fun provideStoryApi(@Named(BASE_TOP_STORIES_URL) retrofit: Retrofit): StoryApi = retrofit.create(StoryApi::class.java)
 
-    @Named(MOVIE_DB_RETROFIT_NAME)
-    fun provideMovieRetrofit(builder: Retrofit.Builder): Retrofit =
+    @Provides
+    @Named(MOVIE_DB_NAME)
+    fun provideMovieRetrofit(@Named(MOVIE_DB_NAME) builder: Retrofit.Builder): Retrofit =
         builder.baseUrl(MovieApi.BASE_URL)
             .build()
 
     @Provides
     @Singleton
-    fun provideMovieApi(@Named(MOVIE_DB_RETROFIT_NAME) retrofit: Retrofit): MovieApi =
+    fun provideMovieApi(@Named(MOVIE_DB_NAME) retrofit: Retrofit): MovieApi =
         retrofit.create(MovieApi::class.java)
 
     companion object {
@@ -82,8 +97,6 @@ class NetworkModule {
         const val READ_TIMEOUT = 10L
         const val WRITE_TIMEOUT = 10L
 
-        const val API_KEY_NYTIME_NAMED = "api_key_nytime"
-        const val MOVIE_DB_CLIENT_NAME = "movie_db_client"
-        const val MOVIE_DB_RETROFIT_NAME = "movie_db"
+        const val MOVIE_DB_NAME = "movie_db"
     }
 }
