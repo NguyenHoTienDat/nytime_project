@@ -1,6 +1,6 @@
 package com.framgia.newyorktime.base.model
 
-import com.framgia.domain.model.Model
+import com.framgia.domain.base.Model
 
 /**
  * Created: 31/07/2018

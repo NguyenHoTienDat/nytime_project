@@ -1,5 +1,6 @@
 package com.framgia.domain.usecase
 
+import com.framgia.domain.base.UseCase
 import com.framgia.domain.model.Story
 import com.framgia.domain.repository.StoryRepository
 import io.reactivex.Single

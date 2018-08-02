@@ -1,7 +1,7 @@
 package com.framgia.newyorktime.base.viewmodel
 
 import android.arch.lifecycle.ViewModel
-import com.framgia.domain.usecase.UseCase
+import com.framgia.domain.base.UseCase
 import io.reactivex.disposables.CompositeDisposable
 
 /**

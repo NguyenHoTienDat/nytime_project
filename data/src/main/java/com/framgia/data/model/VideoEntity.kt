@@ -1,8 +1,8 @@
-package com.framgia.data.model.moviedb
+package com.framgia.data.model
 
 import com.framgia.data.base.EntityMapper
 import com.framgia.data.base.ModelEntity
-import com.framgia.domain.model.moviedb.Video
+import com.framgia.domain.model.Video
 import javax.inject.Inject
 
 /**
