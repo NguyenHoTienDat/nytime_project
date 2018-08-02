@@ -1,4 +1,4 @@
-package com.framgia.domain.usecase
+package com.framgia.domain.base
 
 /**
  * Created: 31/07/2018

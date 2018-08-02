@@ -1,6 +1,6 @@
-package com.framgia.domain.model.moviedb
+package com.framgia.domain.model
 
-import com.framgia.domain.model.Model
+import com.framgia.domain.base.Model
 
 /**
  * Created: 01/08/2018

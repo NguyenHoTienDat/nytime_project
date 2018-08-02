@@ -1,6 +1,6 @@
 package com.framgia.data.remote.api
 
-import com.framgia.data.model.moviedb.MovieEntity
+import com.framgia.data.model.MovieEntity
 import com.framgia.data.remote.response.BaseListResponse
 import com.framgia.data.remote.response.CreditResponse
 import com.framgia.data.remote.response.GenreResponse

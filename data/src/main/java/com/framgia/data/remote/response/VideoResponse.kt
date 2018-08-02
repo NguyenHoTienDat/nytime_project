@@ -1,6 +1,6 @@
 package com.framgia.data.remote.response
 
-import com.framgia.data.model.moviedb.VideoEntity
+import com.framgia.data.model.VideoEntity
 
 /**
  * Created by fs-sournary.

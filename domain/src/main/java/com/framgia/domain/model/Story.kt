@@ -1,5 +1,7 @@
 package com.framgia.domain.model
 
+import com.framgia.domain.base.Model
+
 data class Story(var section: String = "",
                  var subsection: String = "",
                  var title: String = "",

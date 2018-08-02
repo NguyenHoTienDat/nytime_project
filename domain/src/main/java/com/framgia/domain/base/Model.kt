@@ -1,8 +1,8 @@
-package com.framgia.domain.repository
+package com.framgia.domain.base
 
 /**
  * Created: 31/07/2018
  * By: Sang
  * Description:
  */
-interface repository
+open class Model

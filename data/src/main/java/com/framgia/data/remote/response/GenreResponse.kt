@@ -1,6 +1,6 @@
 package com.framgia.data.remote.response
 
-import com.framgia.data.model.moviedb.GenreEntity
+import com.framgia.data.model.GenreEntity
 import com.google.gson.annotations.SerializedName
 
 /**
