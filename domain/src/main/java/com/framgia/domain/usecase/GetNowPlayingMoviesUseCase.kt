@@ -2,6 +2,7 @@ package com.framgia.domain.usecase
 
 import com.framgia.domain.base.UseCase
 import com.framgia.domain.model.Movie
+import com.framgia.domain.model.MovieInfo
 import com.framgia.domain.repository.MovieRepository
 import io.reactivex.Single
 import javax.inject.Inject
@@ -13,9 +14,9 @@ import javax.inject.Inject
  */
 class GetNowPlayingMoviesUseCase @Inject constructor(
     private val movieRepository: MovieRepository
-) : UseCase<GetNowPlayingMoviesUseCase.Params, Single<List<Movie>>>() {
+) : UseCase<GetNowPlayingMoviesUseCase.Params, Single<MovieInfo>>() {
 
-    override fun createObservable(params: Params): Single<List<Movie>> =
+    override fun createObservable(params: Params): Single<MovieInfo> =
         movieRepository.getNowPlayingMovies(params.page)
 
     override fun onCleared() {

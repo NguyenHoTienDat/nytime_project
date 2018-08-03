@@ -1,5 +1,6 @@
 package com.framgia.data.remote.api
 
+import com.framgia.data.BuildConfig
 import com.framgia.data.model.MovieEntity
 import com.framgia.data.remote.response.BaseListResponse
 import com.framgia.data.remote.response.CreditResponse
@@ -18,41 +19,42 @@ import retrofit2.http.Query
  */
 interface MovieApi {
 
-    @GET("movie/now_playing")
+    @GET("movie/now_playing?$API_KEY")
     fun getNowPlayingMovies(@Query(PARAM_PAGE) page: Int): Single<BaseListResponse<MovieEntity>>
 
-    @GET("movie/popular")
+    @GET("movie/popular?$API_KEY")
     fun getPopularMovies(@Query(PARAM_PAGE) page: Int): Single<BaseListResponse<MovieEntity>>
 
-    @GET("movie/top_rated")
+    @GET("movie/top_rated?$API_KEY")
     fun getTopRateMovies(@Query(PARAM_PAGE) page: Int): Single<BaseListResponse<MovieEntity>>
 
-    @GET("movie/upcoming")
+    @GET("movie/upcoming?$API_KEY")
     fun getUpcomingMovies(@Query(PARAM_PAGE) page: Int): Single<BaseListResponse<MovieEntity>>
 
-    @GET("genre/movie/list")
+    @GET("genre/movie/list?$API_KEY")
     fun getGenres(): Single<GenreResponse>
 
-    @GET("movie/{movie_id}/credits")
+    @GET("movie/{movie_id}/credits?$API_KEY")
     fun getCredits(@Path("movie_id") movieId: Int): Single<CreditResponse>
 
-    @GET("search/movie")
+    @GET("search/movie?$API_KEY")
     fun getSearchMovies(
         @Query(PARAM_QUERY) query: String,
         @Query(PARAM_PAGE) page: Int
     ): Observable<BaseListResponse<MovieEntity>>
 
-    @GET("discover/movie")
+    @GET("discover/movie?$API_KEY")
     fun getMoviesByGenre(
         @Query(PARAM_GENRE_ID) genreId: String,
         @Query(PARAM_PAGE) page: Int
     ): Single<BaseListResponse<MovieEntity>>
 
-    @GET("movie/{$PARAM_MOVIE_ID}/videos")
+    @GET("movie/{$PARAM_MOVIE_ID}/videos?$API_KEY")
     fun getVideos(@Path(PARAM_MOVIE_ID) movieId: Int): Single<VideoResponse>
 
     companion object {
 
+        const val API_KEY = "api_key=" + BuildConfig.MOVIE_API_KEY
         const val BASE_URL = "https://api.themoviedb.org/3/"
         const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w500"
         const val PARAM_GENRE_ID = "with_genres"

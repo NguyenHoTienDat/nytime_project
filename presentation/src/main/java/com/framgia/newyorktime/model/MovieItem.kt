@@ -26,6 +26,7 @@ data class MovieItem(
     var status: String?,
     var title: String,
     var video: Boolean,
+    var voteAverage: Double,
     var voteCount: Int
 ) : ModelItem()
 
@@ -59,6 +60,7 @@ class MovieItemMapper @Inject constructor(
             status = model.status,
             title = model.title,
             video = model.video,
+            voteAverage = model.voteAverage,
             voteCount = model.voteCount
         )
 
@@ -85,6 +87,7 @@ class MovieItemMapper @Inject constructor(
             status = modelItem.status,
             title = modelItem.title,
             video = modelItem.video,
+            voteAverage = modelItem.voteAverage,
             voteCount = modelItem.voteCount
         )
 }

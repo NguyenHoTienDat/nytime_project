@@ -3,6 +3,7 @@ package com.framgia.domain.repository
 import com.framgia.domain.base.Repository
 import com.framgia.domain.model.Cast
 import com.framgia.domain.model.Movie
+import com.framgia.domain.model.MovieInfo
 import com.framgia.domain.model.Video
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -15,7 +16,7 @@ import io.reactivex.Single
 interface MovieRepository : Repository {
 
     // Remote
-    fun getNowPlayingMovies(page: Int): Single<List<Movie>>
+    fun getNowPlayingMovies(page: Int): Single<MovieInfo>
 
     fun getPopularMovies(page: Int): Single<List<Movie>>
 
