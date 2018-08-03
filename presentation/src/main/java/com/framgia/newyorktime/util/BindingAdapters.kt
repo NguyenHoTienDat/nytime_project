@@ -24,3 +24,8 @@ fun setImageUrl(view: ImageView, url: String?) {
             .apply(RequestOptions().placeholder(R.drawable.ic_no_image))
             .into(view)
 }
+
+@BindingAdapter("setSelected")
+fun setViewSelected(view: ImageView, state: Boolean) {
+    view.isSelected = state
+}
