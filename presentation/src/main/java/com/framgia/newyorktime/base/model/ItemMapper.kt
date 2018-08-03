@@ -9,7 +9,7 @@ import com.framgia.domain.base.Model
  */
 interface ItemMapper<M : Model, MI : ModelItem> {
 
-    fun mapToPresentation(model: M): ModelItem
+    fun mapToPresentation(model: M): MI
 
-    fun mapToDomain(modelItem: MI): Model
+    fun mapToDomain(modelItem: MI): M
 }
