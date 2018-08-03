@@ -1,4 +1,4 @@
-package com.framgia.newyorktime.ui.main.topstories
+package com.framgia.newyorktime.ui.topstories
 
 import android.support.v7.util.DiffUtil
 import com.framgia.newyorktime.R
@@ -16,7 +16,7 @@ class TopStoryAdapter(private val callback: ((StoryItem) -> Unit)?)
             }
 
             override fun areContentsTheSame(oldItem: StoryItem, newItem: StoryItem): Boolean {
-                return oldItem.url == newItem.url
+                return oldItem == newItem
             }
 
         }

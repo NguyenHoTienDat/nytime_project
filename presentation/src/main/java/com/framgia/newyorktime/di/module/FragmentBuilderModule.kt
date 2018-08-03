@@ -4,7 +4,7 @@ import com.framgia.newyorktime.ui.main.MainFragment
 import com.framgia.newyorktime.ui.main.mostpopularstories.MostPopularStoriesFragment
 import com.framgia.newyorktime.ui.main.nowplayingmovies.NowPlayingMoviesFragment
 import com.framgia.newyorktime.ui.main.topratemovies.TopRateMoviesFragment
-import com.framgia.newyorktime.ui.main.topstories.TopStoriesFragment
+import com.framgia.newyorktime.ui.topstories.TopStoriesFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -14,7 +14,7 @@ import dagger.android.ContributesAndroidInjector
  * Description:
  */
 @Module
-abstract class giFragmentBuilderModule {
+abstract class FragmentBuilderModule {
 
     @ContributesAndroidInjector
     abstract fun contributeTopStoriesFragment(): TopStoriesFragment

@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter
 import com.framgia.newyorktime.ui.main.mostpopularstories.MostPopularStoriesFragment
 import com.framgia.newyorktime.ui.main.nowplayingmovies.NowPlayingMoviesFragment
 import com.framgia.newyorktime.ui.main.topratemovies.TopRateMoviesFragment
-import com.framgia.newyorktime.ui.main.topstories.TopStoriesFragment
+import com.framgia.newyorktime.ui.topstories.TopStoriesFragment
 
 /**
  * Created: 03/08/2018

@@ -7,7 +7,7 @@ import com.framgia.newyorktime.ui.main.MainViewModel
 import com.framgia.newyorktime.ui.main.mostpopularstories.MostPopularStoriesViewModel
 import com.framgia.newyorktime.ui.main.nowplayingmovies.NowPlayingMoviesViewModel
 import com.framgia.newyorktime.ui.main.topratemovies.TopRateMoviesViewModel
-import com.framgia.newyorktime.ui.main.topstories.TopStoriesViewModel
+import com.framgia.newyorktime.ui.topstories.TopStoriesViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
