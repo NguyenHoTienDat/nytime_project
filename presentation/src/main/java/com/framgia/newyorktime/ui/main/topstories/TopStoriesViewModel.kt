@@ -1,4 +1,4 @@
-package com.framgia.newyorktime.ui.topstories
+package com.framgia.newyorktime.ui.main.topstories
 
 import android.app.Application
 import android.arch.lifecycle.Lifecycle

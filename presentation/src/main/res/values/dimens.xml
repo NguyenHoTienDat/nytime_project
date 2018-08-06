@@ -8,4 +8,6 @@
     <dimen name="dp_15">15dp</dimen>
     <dimen name="dp_20">20dp</dimen>
     <dimen name="dp_220">220dp</dimen>
+    <dimen name="dp_196">196dp</dimen>
+    <dimen name="dp_4">4dp</dimen>
 </resources>

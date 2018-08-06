@@ -18,4 +18,15 @@
     <string name="notice_hour_title">h ago</string>
     <string name="notice_min_title">m ago</string>
     <string name="notice_now_title">just now</string>
+    <string name="title_news">News</string>
+    <string name="title_top_stories">Top stories</string>
+    <string name="title_most_popular">Most popular</string>
+    <string name="action_open_drawer">Open drawer</string>
+    <string name="action_close_drawer">Close drawer</string>
+    <string name="title_search">Search here</string>
+    <string name="title_movie">Movie</string>
+    <string name="title_now_playing">Now playing</string>
+    <string name="title_top_rate">Top rate</string>
+    <string name="title_other">Other</string>
+    <string name="title_about">About</string>
 </resources>

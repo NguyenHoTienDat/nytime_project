@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.framgia.newyorktime.ui.topstories.TopStoriesViewModel" />
+            type="com.framgia.newyorktime.ui.main.topstories.TopStoriesViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
