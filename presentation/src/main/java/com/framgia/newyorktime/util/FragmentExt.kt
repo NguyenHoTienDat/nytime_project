@@ -50,6 +50,12 @@ fun Fragment.replaceFragment(newFragment: Fragment, tag: String, isAddToBackStac
     }
 }
 
+fun Fragment.popFragmentOut() {
+    activity?.apply {
+        supportFragmentManager.popBackStack()
+    }
+}
+
 fun Fragment.performDependenceInjection() {
     AndroidSupportInjection.inject(this)
 }
