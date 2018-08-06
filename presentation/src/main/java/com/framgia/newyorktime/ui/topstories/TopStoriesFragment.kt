@@ -4,16 +4,16 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.framgia.newyorktime.R
 import com.framgia.newyorktime.base.fragment.BaseFragment
 import com.framgia.newyorktime.base.recyclerview.BaseUserActionsListener
 import com.framgia.newyorktime.model.nytime.StoryGenreItem
 import com.framgia.newyorktime.model.nytime.StoryItem
-import android.support.v7.widget.LinearLayoutManager
-import com.framgia.newyorktime.BR
-import com.framgia.newyorktime.R
-import com.framgia.newyorktime.databinding.FragmentTopStoriesBinding
 import com.framgia.newyorktime.util.SharedPreUtils
+import com.framgia.newyorktime.BR
+import com.framgia.newyorktime.databinding.FragmentTopStoriesBinding
 import kotlinx.android.synthetic.main.fragment_top_stories.*
 
 class TopStoriesFragment : BaseFragment<FragmentTopStoriesBinding, TopStoriesViewModel>()
