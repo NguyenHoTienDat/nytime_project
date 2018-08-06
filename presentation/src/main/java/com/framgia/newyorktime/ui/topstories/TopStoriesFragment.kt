@@ -2,7 +2,9 @@ package com.framgia.newyorktime.ui.topstories
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.framgia.newyorktime.BR
 import com.framgia.newyorktime.R
@@ -10,18 +12,58 @@ import com.framgia.newyorktime.base.fragment.BaseFragment
 import com.framgia.newyorktime.base.recyclerview.BaseUserActionsListener
 import com.framgia.newyorktime.databinding.FragmentTopStoriesBinding
 import com.framgia.newyorktime.model.nytime.StoryGenreItem
+import com.framgia.newyorktime.model.nytime.StoryItem
 import com.framgia.newyorktime.util.SharedPreUtils
 import kotlinx.android.synthetic.main.fragment_top_stories.*
 
 class TopStoriesFragment : BaseFragment<FragmentTopStoriesBinding, TopStoriesViewModel>()
-        , BaseUserActionsListener<StoryGenreItem> {
+        , TopStoryNavigator {
 
     companion object {
         fun newInstance() = TopStoriesFragment()
+        private const val SHARE_TITLE = "Choose sharing method"
+        private const val SHARE_SUBJECT = "Subject/Title"
+        private const val SHARE_TYPE = "text/plain"
     }
 
     private lateinit var genreAdapter: GenreAdapter
     private lateinit var storyAdapter: TopStoryAdapter
+
+    private val itemStoryListener = object : TopStoryAdapter.OnStoryItemClickListener {
+        override fun onSaveClick(item: StoryItem) {
+
+        }
+
+        override fun onShareClick(item: StoryItem) {
+            openShareChooser(item)
+        }
+
+        override fun onItemViewClick(v: View, item: StoryItem, position: Int) {
+
+        }
+
+    }
+
+    private val itemGenreListener = object : BaseUserActionsListener<StoryGenreItem> {
+        override fun onItemViewClick(v: View, item: StoryGenreItem, position: Int) {
+            genreAdapter.run {
+                this@TopStoriesFragment.activity?.let {
+                    SharedPreUtils.saveStoryType(it, item.name)
+                    SharedPreUtils.saveStoryTypePos(it, position)
+                }
+
+                //update choose item
+                submitList(viewModel.generateGenres().apply {
+                    map { storyGenreItem: StoryGenreItem -> storyGenreItem.isSelected = false }
+                    this[position].isSelected = true
+                })
+                recycler_genre.scrollToPosition(position)
+            }
+
+            //update list data
+            viewModel.getTopStories(item.name)
+        }
+    }
 
     override val bindingVariable: Int
         get() = BR.viewModel
@@ -33,15 +75,9 @@ class TopStoriesFragment : BaseFragment<FragmentTopStoriesBinding, TopStoriesVie
     override val layoutId: Int
         get() = R.layout.fragment_top_stories
 
-    override fun retrieveOrRestoreState(savedInstanceState: Bundle?) {
-
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        storyAdapter = TopStoryAdapter {}.apply { recycler_story.adapter = this }
-        genreAdapter = GenreAdapter(this)
+    override fun initComponent(savedInstanceState: Bundle?) {
+        storyAdapter = TopStoryAdapter(itemStoryListener).apply { recycler_story.adapter = this }
+        genreAdapter = GenreAdapter(itemGenreListener)
         genreAdapter.run {
             recycler_genre.apply {
                 adapter = this@run
@@ -67,36 +103,33 @@ class TopStoriesFragment : BaseFragment<FragmentTopStoriesBinding, TopStoriesVie
         observeViewModel()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.curStoriesPosition = getCurrentStoriesScrollPos()
+    }
+
+    override fun openShareChooser(item: StoryItem) {
+        startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
+            type = SHARE_TYPE
+            putExtra(android.content.Intent.EXTRA_SUBJECT, SHARE_SUBJECT)
+            putExtra(android.content.Intent.EXTRA_TEXT, item.url)
+        }, SHARE_TITLE))
+    }
+
     private fun observeViewModel() {
         viewModel.stories.observe(this, Observer {
             it?.let { it1 ->
                 storyAdapter.submitList(it1)
-                recycler_story.scrollToPosition(0)
+                recycler_story.scrollToPosition(viewModel.curStoriesPosition)
                 viewModel.makeLoadingState(false)
                 if (swipe_stories.isRefreshing) {
                     swipe_stories.isRefreshing = false
-
                 }
             }
         })
     }
 
-    override fun onItemViewClick(v: View, item: StoryGenreItem, position: Int) {
-        genreAdapter.run {
-            this@TopStoriesFragment.activity?.let {
-                SharedPreUtils.saveStoryType(it, item.name)
-                SharedPreUtils.saveStoryTypePos(it, position)
-            }
-
-            //update choose item
-            submitList(viewModel.generateGenres().apply {
-                map { storyGenreItem: StoryGenreItem -> storyGenreItem.isSelected = false }
-                this[position].isSelected = true
-            })
-            recycler_genre.scrollToPosition(position)
-        }
-
-        //update list data
-        viewModel.getTopStories(item.name)
-    }
+    private fun getCurrentStoriesScrollPos() = if (recycler_story.layoutManager is LinearLayoutManager) {
+        (recycler_story.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+    } else 0
 }

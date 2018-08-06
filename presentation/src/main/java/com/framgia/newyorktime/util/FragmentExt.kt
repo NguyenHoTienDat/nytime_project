@@ -38,12 +38,12 @@ fun Fragment.showKeyBoardFromEditText(editText: EditText) {
 }
 
 fun Fragment.findFragmentByTag(tag: String): Fragment? =
-    activity?.run { this.supportFragmentManager.findFragmentByTag(tag) }
+        activity?.run { this.supportFragmentManager.findFragmentByTag(tag) }
 
-fun Fragment.replaceFragment(tag: String, isAddToBackStack: Boolean = false, transit: Int = -1) {
+fun Fragment.replaceFragment(newFragment: Fragment, tag: String, isAddToBackStack: Boolean = false, transit: Int = -1) {
     activity?.apply {
         val transaction =
-            supportFragmentManager.beginTransaction().replace(R.id.container, this@replaceFragment)
+                supportFragmentManager.beginTransaction().replace(R.id.container, newFragment)
         if (isAddToBackStack) transaction.addToBackStack(tag)
         if (transit != -1) transaction.setTransition(transit)
         transaction.commit()

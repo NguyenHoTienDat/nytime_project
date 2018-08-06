@@ -9,7 +9,6 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toast
 import com.framgia.newyorktime.BR
 import com.framgia.newyorktime.R
 import com.framgia.newyorktime.base.fragment.BaseFragment
@@ -34,7 +33,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
     override val layoutId: Int
         get() = R.layout.fragment_main
 
-    override fun retrieveOrRestoreState(savedInstanceState: Bundle?) {
+    override fun initComponent(savedInstanceState: Bundle?) {
         setupTheme()
         setupToolbar()
         setupTab()

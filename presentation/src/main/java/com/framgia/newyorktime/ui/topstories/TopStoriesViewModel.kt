@@ -24,7 +24,9 @@ class TopStoriesViewModel @Inject constructor(
 
     val stories = MutableLiveData<List<StoryItem>>()
     val isDataLoading = MutableLiveData<Boolean>()
+
     var curGenres = generateGenres()
+    var curStoriesPosition = 0
 
     private var curStoryType: String? = null
 

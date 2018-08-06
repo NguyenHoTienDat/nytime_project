@@ -31,7 +31,7 @@ class NowPlayingMoviesFragment :
     override val layoutId: Int
         get() = R.layout.fragment_now_playing_movies
 
-    override fun retrieveOrRestoreState(savedInstanceState: Bundle?) {
+    override fun initComponent(savedInstanceState: Bundle?) {
         setupMovieList()
         setupViewModel()
     }
