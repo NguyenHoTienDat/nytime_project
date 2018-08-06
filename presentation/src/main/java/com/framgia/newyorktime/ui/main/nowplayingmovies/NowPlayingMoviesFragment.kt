@@ -18,7 +18,6 @@ import com.framgia.newyorktime.ui.widget.EndlessRecyclerScrollListener
 class NowPlayingMoviesFragment :
     BaseFragment<FragmentNowPlayingMoviesBinding, NowPlayingMoviesViewModel>() {
 
-    private lateinit var nowPlayingMoviesAdapter: NowPlayingMoviesAdapter
     private lateinit var endlessRecyclerScrollListener: EndlessRecyclerScrollListener
 
     override val bindingVariable: Int
@@ -37,7 +36,7 @@ class NowPlayingMoviesFragment :
     }
 
     private fun setupMovieList() {
-        nowPlayingMoviesAdapter = NowPlayingMoviesAdapter()
+        val nowPlayingMoviesAdapter = NowPlayingMoviesAdapter()
         endlessRecyclerScrollListener = EndlessRecyclerScrollListener { viewModel.loadMoreMovies() }
         viewDataBinding.recyclerMovie.apply {
             adapter = nowPlayingMoviesAdapter
@@ -47,11 +46,9 @@ class NowPlayingMoviesFragment :
     }
 
     private fun setupViewModel() {
-        viewModel.apply {
-            isLoadMore.observe(this@NowPlayingMoviesFragment, Observer {
-                it?.let { endlessRecyclerScrollListener.isLoadMore = it }
-            })
-        }
+        viewModel.isLoadMore.observe(this@NowPlayingMoviesFragment, Observer {
+            it?.let { endlessRecyclerScrollListener.isLoadMore = it }
+        })
     }
 
     companion object {

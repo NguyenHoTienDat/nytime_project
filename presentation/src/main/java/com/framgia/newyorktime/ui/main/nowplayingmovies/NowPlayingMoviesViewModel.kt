@@ -3,13 +3,11 @@ package com.framgia.newyorktime.ui.main.nowplayingmovies
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.OnLifecycleEvent
-import android.util.Log
 import com.framgia.domain.usecase.GetNowPlayingMoviesUseCase
 import com.framgia.newyorktime.base.viewmodel.BaseViewModel
 import com.framgia.newyorktime.model.MovieItem
 import com.framgia.newyorktime.model.MovieItemMapper
 import com.framgia.newyorktime.rx.SchedulerProvider
-import com.framgia.newyorktime.util.custom.SingleLiveEvent
 import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 
@@ -29,7 +27,7 @@ class NowPlayingMoviesViewModel @Inject constructor(
     private var tempMovies: MutableList<MovieItem> = mutableListOf()
 
     val movies = MutableLiveData<List<MovieItem>>()
-    val loadGenreError = SingleLiveEvent<String>()
+    val isLoadError = MutableLiveData<Boolean>()
     val isLoadData = MutableLiveData<Boolean>()
     val isLoadMore = MutableLiveData<Boolean>()
 
@@ -38,6 +36,7 @@ class NowPlayingMoviesViewModel @Inject constructor(
         if (movies.value != null) {
             return
         }
+        isLoadError.value = false
         val disposable = getNowPlayingMoviesUseCase
             .createObservable(GetNowPlayingMoviesUseCase.Params(currentPage))
             .subscribeOn(schedulerProvider.io())
@@ -50,6 +49,7 @@ class NowPlayingMoviesViewModel @Inject constructor(
             .doOnSubscribe { isLoadData.value = true }
             .subscribeBy(
                 onSuccess = {
+                    isLoadError.value = false
                     isLoadData.value = false
                     tempMovies.addAll(it)
                     movies.value = tempMovies
@@ -57,7 +57,7 @@ class NowPlayingMoviesViewModel @Inject constructor(
                 },
                 onError = {
                     isLoadData.value = false
-                    loadGenreError.value = it.message
+                    isLoadError.value = true
                 }
             )
         compositeDisposable.add(disposable)
@@ -65,7 +65,6 @@ class NowPlayingMoviesViewModel @Inject constructor(
 
     fun loadMoreMovies() {
         if (currentPage <= totalPage) {
-            Log.d("TAG", "start load more: $currentPage - $totalPage")
             isLoadMore.value = true
             val disposable = getNowPlayingMoviesUseCase
                 .createObservable(GetNowPlayingMoviesUseCase.Params(currentPage))
@@ -81,13 +80,10 @@ class NowPlayingMoviesViewModel @Inject constructor(
                         isLoadMore.value = false
                         tempMovies.addAll(it)
                         movies.value = tempMovies
-                        Log.d("TAG", "movies size load more: ${movies.value!!.size}")
                         currentPage++
                     },
                     onError = {
-                        Log.d("TAG", "error")
                         isLoadMore.value = false
-                        loadGenreError.value = it.message
                     }
                 )
             compositeDisposable.add(disposable)

@@ -20,7 +20,7 @@ interface MovieRepository : Repository {
 
     fun getPopularMovies(page: Int): Single<List<Movie>>
 
-    fun getTopRateMovies(page: Int): Single<List<Movie>>
+    fun getTopRateMovies(page: Int): Single<MovieInfo>
 
     fun getUpcomingMovies(page: Int): Single<List<Movie>>
 
