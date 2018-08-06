@@ -1,8 +1,10 @@
 package com.framgia.data.di.module
 
 import com.framgia.data.repositoryimpl.GenreRepositoryImpl
+import com.framgia.data.repositoryimpl.PopularRepositoryImp
 import com.framgia.data.repositoryimpl.StoryRepositoryImpl
 import com.framgia.domain.repository.GenreRepository
+import com.framgia.domain.repository.PopularRepository
 import com.framgia.domain.repository.StoryRepository
 import dagger.Module
 import dagger.Provides
@@ -26,4 +28,9 @@ class RepositoryModule {
     @Singleton
     fun provideGenreRepository(genreRepositoryImpl: GenreRepositoryImpl): GenreRepository =
         genreRepositoryImpl
+
+    @Provides
+    @Singleton
+    fun providePopularRepository(popularRepositoryImpl: PopularRepositoryImp): PopularRepository =
+            popularRepositoryImpl
 }

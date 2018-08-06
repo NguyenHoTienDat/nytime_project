@@ -14,7 +14,7 @@ import dagger.android.ContributesAndroidInjector
  * Description:
  */
 @Module
-abstract class giFragmentBuilderModule {
+abstract class FragmentBuilderModule {
 
     @ContributesAndroidInjector
     abstract fun contributeTopStoriesFragment(): TopStoriesFragment

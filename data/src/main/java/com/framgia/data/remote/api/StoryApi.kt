@@ -1,5 +1,6 @@
 package com.framgia.data.remote.api
 
+import com.framgia.data.model.MostPopularEntity
 import com.framgia.data.model.StoryEntity
 import com.framgia.data.remote.response.StoryWrapperResponse
 import io.reactivex.Single

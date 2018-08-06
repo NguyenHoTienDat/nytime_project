@@ -1,6 +1,7 @@
 package com.framgia.data.di.module
 
 import com.framgia.data.BuildConfig
+import com.framgia.data.remote.api.MostPopularApi
 import com.framgia.data.remote.api.MovieApi
 import com.framgia.data.remote.api.StoryApi
 import dagger.Module
@@ -79,6 +80,16 @@ class NetworkModule {
     fun provideStoryApi(@Named(BASE_TOP_STORIES_URL) retrofit: Retrofit): StoryApi = retrofit.create(StoryApi::class.java)
 
     @Provides
+    @Singleton
+    @Named(BASE_MOST_POPULAR_URL)
+    fun providePopularRetrofit(@Named(BASE_TOP_STORIES_URL) builder: Retrofit.Builder): Retrofit = builder.baseUrl(BASE_MOST_POPULAR_URL).build()
+
+    @Provides
+    @Singleton
+    fun providePopularApi(@Named(BASE_MOST_POPULAR_URL) retrofit: Retrofit): MostPopularApi = retrofit.create(MostPopularApi::class.java)
+
+
+    @Provides
     @Named(MOVIE_DB_NAME)
     fun provideMovieRetrofit(@Named(MOVIE_DB_NAME) builder: Retrofit.Builder): Retrofit =
         builder.baseUrl(MovieApi.BASE_URL)
@@ -92,7 +103,7 @@ class NetworkModule {
     companion object {
 
         const val BASE_TOP_STORIES_URL = "https://api.nytimes.com/svc/topstories/v2/"
-
+        const val BASE_MOST_POPULAR_URL = "http://api.nytimes.com/svc/mostpopular/v2/"
         const val CONNECTION_TIMEOUT = 10L
         const val READ_TIMEOUT = 10L
         const val WRITE_TIMEOUT = 10L
