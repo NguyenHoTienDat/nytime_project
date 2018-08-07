@@ -24,6 +24,7 @@ class TopStoriesViewModel @Inject constructor(
 
     val stories = MutableLiveData<List<StoryItem>>()
     val isDataLoading = MutableLiveData<Boolean>()
+    val connectFailed = MutableLiveData<Boolean>()
 
     var curGenres = generateGenres()
     var curStoriesPosition = 0
@@ -47,7 +48,12 @@ class TopStoriesViewModel @Inject constructor(
                 .subscribe({
                     stories.value = it
                     curStoryType = storyType ?: SharedPreUtils.getStoryType(application)
-                }, {})
+                    connectFailed.value = false
+                }, {
+                    makeLoadingState(false)
+                    connectFailed.value = true
+                })
+
         )
     }
 

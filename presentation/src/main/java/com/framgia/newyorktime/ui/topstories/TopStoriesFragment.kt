@@ -4,18 +4,20 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.framgia.newyorktime.BR
 import com.framgia.newyorktime.R
 import com.framgia.newyorktime.base.fragment.BaseFragment
 import com.framgia.newyorktime.base.recyclerview.BaseUserActionsListener
+import com.framgia.newyorktime.databinding.FragmentTopStoriesBinding
 import com.framgia.newyorktime.model.nytime.StoryGenreItem
 import com.framgia.newyorktime.model.nytime.StoryItem
 import com.framgia.newyorktime.ui.nydetail.NyDetailFragment
 import com.framgia.newyorktime.util.SharedPreUtils
 import com.framgia.newyorktime.util.replaceFragment
-import com.framgia.newyorktime.BR
-import com.framgia.newyorktime.databinding.FragmentTopStoriesBinding
+import com.framgia.newyorktime.util.showSnackBar
 import kotlinx.android.synthetic.main.fragment_top_stories.*
 
 class TopStoriesFragment : BaseFragment<FragmentTopStoriesBinding, TopStoriesViewModel>()
@@ -77,6 +79,7 @@ class TopStoriesFragment : BaseFragment<FragmentTopStoriesBinding, TopStoriesVie
     override val layoutId: Int
         get() = R.layout.fragment_top_stories
 
+
     override fun initComponent(savedInstanceState: Bundle?) {
         storyAdapter = TopStoryAdapter(itemStoryListener).apply { recycler_story.adapter = this }
         genreAdapter = GenreAdapter(itemGenreListener)
@@ -96,10 +99,7 @@ class TopStoriesFragment : BaseFragment<FragmentTopStoriesBinding, TopStoriesVie
         }
 
         swipe_stories.setOnRefreshListener {
-            //update list data
-            this@TopStoriesFragment.activity?.let {
-                viewModel.getTopStories(SharedPreUtils.getStoryType(it), true)
-            }
+            reloadData()
         }
 
         observeViewModel()
@@ -129,6 +129,27 @@ class TopStoriesFragment : BaseFragment<FragmentTopStoriesBinding, TopStoriesVie
                 }
             }
         })
+
+        viewModel.connectFailed.observe(this, Observer {
+            it?.let {
+                if (it) {
+                    constrain_story_container
+                            .showSnackBar(getString(R.string.connect_failed_title), Snackbar.LENGTH_SHORT)
+                    storyAdapter.submitList(mutableListOf())
+                    appBar.setExpanded(false, true)
+                }
+            }
+            if (swipe_stories.isRefreshing) {
+                swipe_stories.isRefreshing = false
+            }
+        })
+    }
+
+    private fun reloadData() {
+        //update list data
+        this@TopStoriesFragment.activity?.let {
+            viewModel.getTopStories(SharedPreUtils.getStoryType(it), true)
+        }
     }
 
     private fun getCurrentStoriesScrollPos() = if (recycler_story.layoutManager is LinearLayoutManager) {
