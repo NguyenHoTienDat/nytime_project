@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.view.KeyEvent
 import android.view.View
-import com.android.databinding.library.baseAdapters.BR
+import com.framgia.newyorktime.BR
 import com.framgia.newyorktime.R
 import com.framgia.newyorktime.base.fragment.BaseFragment
 import com.framgia.newyorktime.databinding.FragmentNyDetailsBinding
