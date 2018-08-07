@@ -10,7 +10,6 @@ import com.framgia.newyorktime.base.BaseActivity
 import com.framgia.newyorktime.ui.main.MainFragment
 import dagger.android.AndroidInjection
 
-
 class MainActivity : BaseActivity() {
     companion object {
         private const val WIFI_STATE_CHANGED = "android.net.wifi.WIFI_STATE_CHANGED"
