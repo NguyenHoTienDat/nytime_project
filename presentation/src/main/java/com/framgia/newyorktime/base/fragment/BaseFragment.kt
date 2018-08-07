@@ -66,8 +66,8 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        retrieveOrRestoreState(savedInstanceState)
+        initComponent(savedInstanceState)
     }
 
-    abstract fun retrieveOrRestoreState(savedInstanceState: Bundle?)
+    abstract fun initComponent(savedInstanceState: Bundle?)
 }

@@ -24,7 +24,7 @@ class MostPopularStoriesFragment :
     override val layoutId: Int
         get() = R.layout.fragment_most_popular_stories
 
-    override fun retrieveOrRestoreState(savedInstanceState: Bundle?) {
+    override fun initComponent(savedInstanceState: Bundle?) {
 
     }
 

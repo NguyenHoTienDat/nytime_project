@@ -23,7 +23,7 @@ class TopRateMoviesFragment : BaseFragment<FragmentTopRateMoviesBinding, TopRate
     override val layoutId: Int
         get() = R.layout.fragment_top_rate_movies
 
-    override fun retrieveOrRestoreState(savedInstanceState: Bundle?) {
+    override fun initComponent(savedInstanceState: Bundle?) {
 
     }
 
