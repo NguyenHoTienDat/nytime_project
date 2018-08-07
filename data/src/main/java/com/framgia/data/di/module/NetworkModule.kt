@@ -1,6 +1,5 @@
 package com.framgia.data.di.module
 
-import android.util.Log
 import com.framgia.data.BuildConfig
 import com.framgia.data.remote.api.MovieApi
 import com.framgia.data.remote.api.StoryApi
@@ -65,10 +64,13 @@ class NetworkModule {
     @Named(MOVIE_DB_NAME)
     fun provideMovieOkHttpClient(builder: OkHttpClient.Builder): OkHttpClient =
         builder.addInterceptor { chain ->
-            val request = chain.request().newBuilder()
-                .addHeader("api_key", BuildConfig.MOVIE_API_KEY)
+            var request = chain.request()
+            val url = request
+                .url()
+                .newBuilder().addQueryParameter("api_key", BuildConfig.MOVIE_API_KEY)
                 .build()
-            return@addInterceptor chain.proceed(request)
+            request = request.newBuilder().url(url).build()
+            chain.proceed(request)
         }.build()
 
     @Provides
