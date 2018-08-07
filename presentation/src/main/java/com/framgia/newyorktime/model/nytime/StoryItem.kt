@@ -1,16 +1,19 @@
 package com.framgia.newyorktime.model.nytime
 
+import android.os.Parcelable
 import com.framgia.domain.model.Story
 import com.framgia.newyorktime.base.model.ItemMapper
 import com.framgia.newyorktime.base.model.ModelItem
+import kotlinx.android.parcel.Parcelize
 import javax.inject.Inject
 
+@Parcelize
 data class StoryItem(val title: String,
                      val abstract: String,
                      val url: String,
                      val byline: String,
                      val imageUrl: String,
-                     val publishDate: String) : ModelItem()
+                     val publishDate: String) : ModelItem(), Parcelable
 
 class StoryItemMapper @Inject constructor() : ItemMapper<Story, StoryItem> {
 
