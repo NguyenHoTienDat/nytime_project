@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  * By: Sang
  * Description: MutableLiveData for single event
  */
-class SingLiveEvent<T> : MutableLiveData<T>() {
+class SingleLiveEvent<T> : MutableLiveData<T>() {
 
     private val pending = AtomicBoolean(false)
 

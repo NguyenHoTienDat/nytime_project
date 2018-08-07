@@ -8,6 +8,7 @@ import com.framgia.data.remote.api.MovieApi
 import com.framgia.data.remote.response.BaseListResponse
 import com.framgia.domain.model.Cast
 import com.framgia.domain.model.Movie
+import com.framgia.domain.model.MovieInfo
 import com.framgia.domain.model.Video
 import com.framgia.domain.repository.MovieRepository
 import io.reactivex.Observable
@@ -26,9 +27,14 @@ class MovieRepositoryImpl @Inject constructor(
     private val movieEntityMapper: MovieEntityMapper
 ) : MovieRepository {
 
-    override fun getNowPlayingMovies(page: Int): Single<List<Movie>> =
+    override fun getNowPlayingMovies(page: Int): Single<MovieInfo> =
         movieApi.getNowPlayingMovies(page)
-            .flatMap { response -> getMovies(response) }
+            .flatMap { response ->
+                val pageCount = response.totalPages
+                val results =
+                    response.results.map { entity -> movieEntityMapper.mapToDomain(entity) }
+                Single.just(MovieInfo(pageCount, results))
+            }
 
     override fun getPopularMovies(page: Int): Single<List<Movie>> =
         movieApi.getPopularMovies(page)

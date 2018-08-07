@@ -18,37 +18,37 @@ import retrofit2.http.Query
  */
 interface MovieApi {
 
-    @GET("movie/now_playing")
+    @GET("movie/now_playing?")
     fun getNowPlayingMovies(@Query(PARAM_PAGE) page: Int): Single<BaseListResponse<MovieEntity>>
 
-    @GET("movie/popular")
+    @GET("movie/popular?")
     fun getPopularMovies(@Query(PARAM_PAGE) page: Int): Single<BaseListResponse<MovieEntity>>
 
-    @GET("movie/top_rated")
+    @GET("movie/top_rated?")
     fun getTopRateMovies(@Query(PARAM_PAGE) page: Int): Single<BaseListResponse<MovieEntity>>
 
-    @GET("movie/upcoming")
+    @GET("movie/upcoming?")
     fun getUpcomingMovies(@Query(PARAM_PAGE) page: Int): Single<BaseListResponse<MovieEntity>>
 
-    @GET("genre/movie/list")
+    @GET("genre/movie/list?")
     fun getGenres(): Single<GenreResponse>
 
-    @GET("movie/{movie_id}/credits")
+    @GET("movie/{movie_id}/credits?")
     fun getCredits(@Path("movie_id") movieId: Int): Single<CreditResponse>
 
-    @GET("search/movie")
+    @GET("search/movie?")
     fun getSearchMovies(
         @Query(PARAM_QUERY) query: String,
         @Query(PARAM_PAGE) page: Int
     ): Observable<BaseListResponse<MovieEntity>>
 
-    @GET("discover/movie")
+    @GET("discover/movie?")
     fun getMoviesByGenre(
         @Query(PARAM_GENRE_ID) genreId: String,
         @Query(PARAM_PAGE) page: Int
     ): Single<BaseListResponse<MovieEntity>>
 
-    @GET("movie/{$PARAM_MOVIE_ID}/videos")
+    @GET("movie/{$PARAM_MOVIE_ID}/videos?")
     fun getVideos(@Path(PARAM_MOVIE_ID) movieId: Int): Single<VideoResponse>
 
     companion object {
