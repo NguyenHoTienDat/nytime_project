@@ -34,4 +34,6 @@
     <string name="reload_title"> Please check your network and \n retry swipe to reload!</string>
     <string name="online_title"> You are online!</string>
     <string name="offline_title"> You are offline!</string>
+    <string name="msg_load_movie_error">An error was occurred</string>
+    <string name="title_load_again">Load again</string>
 </resources>

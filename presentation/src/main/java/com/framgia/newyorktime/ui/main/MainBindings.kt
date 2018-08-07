@@ -9,6 +9,7 @@ import com.framgia.data.remote.api.MovieApi
 import com.framgia.newyorktime.R
 import com.framgia.newyorktime.model.MovieItem
 import com.framgia.newyorktime.ui.main.nowplayingmovies.NowPlayingMoviesAdapter
+import com.framgia.newyorktime.ui.main.topratemovies.TopRateMoviesAdapter
 
 /**
  * Created: 03/08/2018
@@ -35,6 +36,7 @@ object MainBindings {
     fun RecyclerView.setMovies(items: List<MovieItem>?) {
         when (adapter) {
             is NowPlayingMoviesAdapter -> (adapter as NowPlayingMoviesAdapter).setMovies(items)
+            is TopRateMoviesAdapter -> (adapter as TopRateMoviesAdapter).setMovies(items)
         }
     }
 }

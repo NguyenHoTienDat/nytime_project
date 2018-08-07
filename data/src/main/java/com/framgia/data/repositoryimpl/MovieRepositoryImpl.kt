@@ -33,16 +33,20 @@ class MovieRepositoryImpl @Inject constructor(
                 val pageCount = response.totalPages
                 val results =
                     response.results.map { entity -> movieEntityMapper.mapToDomain(entity) }
-                Single.just(MovieInfo(pageCount, results))
+                return@flatMap Single.just(MovieInfo(pageCount, results))
             }
 
     override fun getPopularMovies(page: Int): Single<List<Movie>> =
         movieApi.getPopularMovies(page)
             .flatMap { response -> getMovies(response) }
 
-    override fun getTopRateMovies(page: Int): Single<List<Movie>> =
+    override fun getTopRateMovies(page: Int): Single<MovieInfo> =
         movieApi.getTopRateMovies(page)
-            .flatMap { response -> getMovies(response) }
+            .flatMap {
+                val pageCount = it.totalPages
+                val results = it.results.map { entity -> movieEntityMapper.mapToDomain(entity) }
+                return@flatMap Single.just(MovieInfo(pageCount, results))
+            }
 
     override fun getUpcomingMovies(page: Int): Single<List<Movie>> =
         movieApi.getUpcomingMovies(page)
