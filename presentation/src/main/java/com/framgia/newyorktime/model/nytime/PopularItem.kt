@@ -13,8 +13,7 @@ class PopularItem(
         var abstract: String?,
         var published_date: String?,
         var views: Int?,
-        var mediaUrl: String?,
-        var mediaCaption: String?) : ModelItem()
+        var mediaUrl: String?) : ModelItem()
 
 class PopularItemMapper @Inject constructor() : ItemMapper<MostPopular, PopularItem> {
     override fun mapToPresentation(model: MostPopular): PopularItem = PopularItem(
@@ -25,9 +24,7 @@ class PopularItemMapper @Inject constructor() : ItemMapper<MostPopular, PopularI
             abstract = model.abstract,
             published_date = model.published_date,
             views = model.views,
-            mediaUrl = model.medias?.get(0)?.media_metadata?.get(0)?.url,
-            mediaCaption = model.medias?.get(0)?.caption
-    )
+            mediaUrl = model.medias?.get(0)?.media_metadata?.get(0)?.url)
 
     override fun mapToDomain(modelItem: PopularItem): MostPopular = MostPopular(
             id = modelItem.id,

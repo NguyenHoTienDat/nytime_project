@@ -43,7 +43,7 @@ class TopStoriesFragment : BaseFragment<FragmentTopStoriesBinding, TopStoriesVie
         }
 
         override fun onItemViewClick(v: View, item: StoryItem, position: Int) {
-            replaceFragment(NyDetailFragment.newInstance(item), NyDetailFragment.TAG, true)
+            replaceFragment(NyDetailFragment.newInstance(item.url), NyDetailFragment.TAG, true)
         }
 
     }
