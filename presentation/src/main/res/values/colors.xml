@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="color_hoki">#67869B</color>
     <color name="color_gray_50_500">#9E9E9E</color>
+    <color name="yellow_50_700">#FBC02D</color>
+    <color name="color_gray_50_200">#EEEEEE</color>
 </resources>

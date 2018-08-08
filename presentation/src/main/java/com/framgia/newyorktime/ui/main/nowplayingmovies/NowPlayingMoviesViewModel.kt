@@ -8,6 +8,7 @@ import com.framgia.newyorktime.base.viewmodel.BaseViewModel
 import com.framgia.newyorktime.model.MovieItem
 import com.framgia.newyorktime.model.MovieItemMapper
 import com.framgia.newyorktime.rx.SchedulerProvider
+import com.framgia.newyorktime.util.custom.SingleLiveEvent
 import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 
@@ -30,6 +31,8 @@ class NowPlayingMoviesViewModel @Inject constructor(
     val isLoadError = MutableLiveData<Boolean>()
     val isLoadData = MutableLiveData<Boolean>()
     val isLoadMore = MutableLiveData<Boolean>()
+
+    val openMovieDetailEvent = SingleLiveEvent<MovieItem>()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun startLoadNowPlayingMovies() {

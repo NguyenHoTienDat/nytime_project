@@ -15,6 +15,7 @@ import com.framgia.newyorktime.R
 import com.framgia.newyorktime.base.fragment.BaseFragment
 import com.framgia.newyorktime.databinding.FragmentMainBinding
 import com.framgia.newyorktime.util.setupActionBar
+import com.framgia.newyorktime.util.setupTheme
 import com.framgia.newyorktime.util.showSnackBar
 import kotlinx.android.synthetic.main.fragment_main.*
 
@@ -45,12 +46,13 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
 
     fun notifyNetWorkState(state: Boolean) {
         place_holder.showSnackBar(
-                if (state) getString(R.string.online_title) else getString(R.string.offline_title),
-                Snackbar.LENGTH_SHORT)
+            if (state) getString(R.string.online_title) else getString(R.string.offline_title),
+            Snackbar.LENGTH_SHORT
+        )
     }
 
     private fun setupTheme() {
-        activity?.apply {
+        setupTheme {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 window.statusBarColor = ContextCompat.getColor(this, android.R.color.transparent)
             }
@@ -76,22 +78,22 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
-            when (item.itemId) {
-                R.id.action_search -> {
+        when (item.itemId) {
+            R.id.action_search -> {
 
-                    true
-                }
-                else -> false
+                true
             }
+            else -> false
+        }
 
     private fun setupDrawer() {
         val drawerLayout = viewDataBinding.drawer
         drawerToggle = ActionBarDrawerToggle(
-                activity,
-                drawerLayout,
-                viewDataBinding.toolbar,
-                R.string.action_open_drawer,
-                R.string.action_close_drawer
+            activity,
+            drawerLayout,
+            viewDataBinding.toolbar,
+            R.string.action_open_drawer,
+            R.string.action_close_drawer
         )
         drawerLayout.addDrawerListener(drawerToggle)
         viewDataBinding.navigation.setNavigationItemSelectedListener {

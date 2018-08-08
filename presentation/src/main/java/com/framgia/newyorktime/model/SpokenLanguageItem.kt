@@ -1,8 +1,10 @@
 package com.framgia.newyorktime.model
 
+import android.os.Parcelable
 import com.framgia.domain.model.SpokenLanguage
 import com.framgia.newyorktime.base.model.ItemMapper
 import com.framgia.newyorktime.base.model.ModelItem
+import kotlinx.android.parcel.Parcelize
 import javax.inject.Inject
 
 /**
@@ -10,7 +12,8 @@ import javax.inject.Inject
  * By: Sang
  * Description:
  */
-class SpokenLanguageItem(val name: String) : ModelItem()
+@Parcelize
+class SpokenLanguageItem(val name: String) : ModelItem(), Parcelable
 
 class SpokenLanguageItemMapper @Inject constructor() :
     ItemMapper<SpokenLanguage, SpokenLanguageItem> {

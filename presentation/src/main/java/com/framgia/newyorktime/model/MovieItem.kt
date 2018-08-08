@@ -1,8 +1,10 @@
 package com.framgia.newyorktime.model
 
+import android.os.Parcelable
 import com.framgia.domain.model.Movie
 import com.framgia.newyorktime.base.model.ItemMapper
 import com.framgia.newyorktime.base.model.ModelItem
+import kotlinx.android.parcel.Parcelize
 import javax.inject.Inject
 
 /**
@@ -10,12 +12,15 @@ import javax.inject.Inject
  * By: Sang
  * Description:
  */
+
+@Parcelize
 data class MovieItem(
     var id: Int,
     var imdbId: Int?,
     var adult: Boolean,
     var backdropPath: String?,
     var posterPath: String?,
+    var budget: Int,
     var genres: List<GenreItem>?,
     var overview: String?,
     var popularity: Double,
@@ -28,7 +33,7 @@ data class MovieItem(
     var video: Boolean,
     var voteAverage: Double,
     var voteCount: Int
-) : ModelItem()
+) : ModelItem(), Parcelable
 
 class MovieItemMapper @Inject constructor(
     private val genreItemMapper: GenreItemMapper,
@@ -44,6 +49,7 @@ class MovieItemMapper @Inject constructor(
             adult = model.adult,
             backdropPath = model.backdropPath,
             posterPath = model.posterPath,
+            budget = model.budget,
             genres = model.genres?.map { genreItemMapper.mapToPresentation(it) },
             overview = model.overview,
             popularity = model.popularity,
@@ -71,6 +77,7 @@ class MovieItemMapper @Inject constructor(
             adult = modelItem.adult,
             backdropPath = modelItem.backdropPath,
             posterPath = modelItem.posterPath,
+            budget = modelItem.budget,
             genres = modelItem.genres?.map { genreItemMapper.mapToDomain(it) },
             overview = modelItem.overview,
             popularity = modelItem.popularity,

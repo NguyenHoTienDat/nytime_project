@@ -7,6 +7,7 @@ import com.framgia.newyorktime.ui.main.MainViewModel
 import com.framgia.newyorktime.ui.main.mostpopularstories.MostPopularStoriesViewModel
 import com.framgia.newyorktime.ui.main.nowplayingmovies.NowPlayingMoviesViewModel
 import com.framgia.newyorktime.ui.main.topratemovies.TopRateMoviesViewModel
+import com.framgia.newyorktime.ui.moviedetail.MovieDetailViewModel
 import com.framgia.newyorktime.ui.nydetail.NyDetailViewModel
 import com.framgia.newyorktime.ui.topstories.TopStoriesViewModel
 import dagger.Binds
@@ -48,6 +49,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MostPopularStoriesViewModel::class)
     abstract fun bindMostPopularStoriesViewModel(mostPopularStoriesViewModel: MostPopularStoriesViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MovieDetailViewModel::class)
+    abstract fun bindMovieDetailViewModel(movieDetailViewModel: MovieDetailViewModel): ViewModel
 
     @Binds
     @IntoMap
