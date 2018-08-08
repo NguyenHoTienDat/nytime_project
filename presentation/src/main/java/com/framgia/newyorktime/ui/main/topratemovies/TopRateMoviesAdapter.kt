@@ -12,7 +12,7 @@ import com.framgia.newyorktime.model.MovieItem
  * By: Sang
  * Description:
  */
-class TopRateMoviesAdapter :
+class TopRateMoviesAdapter(private val userActionsListener: TopRateUserActionsListener) :
     BaseRecyclerViewAdapter<MovieItem,
             ItemMovieBinding,
             TopRateMoviesAdapter.ViewHolder>(
@@ -35,6 +35,8 @@ class TopRateMoviesAdapter :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.binding) {
             movie = getItem(position)
+            listener = userActionsListener
+            p = position
             executePendingBindings()
         }
     }

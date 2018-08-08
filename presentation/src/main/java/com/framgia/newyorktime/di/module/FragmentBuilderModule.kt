@@ -4,6 +4,7 @@ import com.framgia.newyorktime.ui.main.MainFragment
 import com.framgia.newyorktime.ui.main.mostpopularstories.MostPopularStoriesFragment
 import com.framgia.newyorktime.ui.main.nowplayingmovies.NowPlayingMoviesFragment
 import com.framgia.newyorktime.ui.main.topratemovies.TopRateMoviesFragment
+import com.framgia.newyorktime.ui.moviedetail.MovieDetailFragment
 import com.framgia.newyorktime.ui.nydetail.NyDetailFragment
 import com.framgia.newyorktime.ui.topstories.TopStoriesFragment
 import dagger.Module
@@ -31,6 +32,9 @@ abstract class FragmentBuilderModule {
 
     @ContributesAndroidInjector
     abstract fun contributeMostPopularStoriesFragment(): MostPopularStoriesFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeMovieDetailFragment(): MovieDetailFragment
 
     @ContributesAndroidInjector
     abstract fun contributeNyDetailFragment(): NyDetailFragment

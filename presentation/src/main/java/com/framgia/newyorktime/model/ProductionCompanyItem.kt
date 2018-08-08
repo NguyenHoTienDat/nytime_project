@@ -1,8 +1,10 @@
 package com.framgia.newyorktime.model
 
+import android.os.Parcelable
 import com.framgia.domain.model.ProductionCompany
 import com.framgia.newyorktime.base.model.ItemMapper
 import com.framgia.newyorktime.base.model.ModelItem
+import kotlinx.android.parcel.Parcelize
 import javax.inject.Inject
 
 /**
@@ -10,11 +12,12 @@ import javax.inject.Inject
  * By: Sang
  * Description:
  */
+@Parcelize
 data class ProductionCompanyItem(
     val id: Int = 0,
     val logoPath: String,
     val originCountry: String
-) : ModelItem()
+) : ModelItem(), Parcelable
 
 class ProductionCompanyItemMapper @Inject constructor() :
     ItemMapper<ProductionCompany, ProductionCompanyItem> {

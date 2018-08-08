@@ -21,7 +21,7 @@ data class CastItem(
     val profilePath: String?
 ) : ModelItem()
 
-class CastItemMapper @Inject constructor(private val random: Random) : ItemMapper<Cast, CastItem> {
+class CastItemMapper @Inject constructor() : ItemMapper<Cast, CastItem> {
 
     override fun mapToPresentation(model: Cast): CastItem =
         CastItem(
