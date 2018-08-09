@@ -13,6 +13,11 @@
                     android:id="@+id/action_most_popular"
                     android:icon="@drawable/ic_most_popular"
                     android:title="@string/title_most_popular" />
+
+                <item
+                    android:id="@+id/action_offline_news"
+                    android:icon="@drawable/ic_offline_new"
+                    android:title="@string/title_offline_news" />
             </group>
         </menu>
     </item>
@@ -29,6 +34,11 @@
                     android:id="@+id/action_top_rate"
                     android:icon="@drawable/ic_top_rate_movie"
                     android:title="@string/title_top_rate" />
+
+                <item
+                    android:id="@+id/action_offline_movies"
+                    android:icon="@drawable/ic_offline_movies"
+                    android:title="@string/title_offline_movies" />
             </group>
         </menu>
     </item>

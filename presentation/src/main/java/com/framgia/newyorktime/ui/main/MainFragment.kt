@@ -1,6 +1,6 @@
 package com.framgia.newyorktime.ui.main
 
-import android.arch.lifecycle.ViewModelProviders
+import android.arch.lifecycle.Observer
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
@@ -14,9 +14,8 @@ import com.framgia.newyorktime.BR
 import com.framgia.newyorktime.R
 import com.framgia.newyorktime.base.fragment.BaseFragment
 import com.framgia.newyorktime.databinding.FragmentMainBinding
-import com.framgia.newyorktime.util.setupActionBar
-import com.framgia.newyorktime.util.setupTheme
-import com.framgia.newyorktime.util.showSnackBar
+import com.framgia.newyorktime.ui.search.SearchFragment
+import com.framgia.newyorktime.util.*
 import kotlinx.android.synthetic.main.fragment_main.*
 
 /**
@@ -24,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_main.*
  * Date: 8/2/18.
  * Description:
  */
-class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
+class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(), MainNavigator {
 
     private lateinit var drawerToggle: ActionBarDrawerToggle
 
@@ -32,7 +31,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
         get() = BR.viewModel
 
     override val viewModel: MainViewModel
-        get() = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        get() = getViewModelFragmentBound(MainViewModel::class.java, viewModelFactory)
 
     override val layoutId: Int
         get() = R.layout.fragment_main
@@ -42,6 +41,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
         setupToolbar()
         setupTab()
         setupDrawer()
+        setupViewModel()
     }
 
     fun notifyNetWorkState(state: Boolean) {
@@ -80,7 +80,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
         when (item.itemId) {
             R.id.action_search -> {
-
+                viewModel.loadSearch()
                 true
             }
             else -> false
@@ -98,11 +98,38 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
         drawerLayout.addDrawerListener(drawerToggle)
         viewDataBinding.navigation.setNavigationItemSelectedListener {
             when (it.itemId) {
-
+                R.id.action_top_stories -> viewModel.openPageEvent.value = 0
+                R.id.action_most_popular -> viewModel.openPageEvent.value = 1
+                R.id.action_now_playing -> viewModel.openPageEvent.value = 2
+                R.id.action_top_rate -> viewModel.openPageEvent.value = 3
+                R.id.action_offline_news -> viewModel.loadOfflineNews()
+                R.id.action_offline_movies -> viewModel.loadOfflineMovies()
             }
+            drawerLayout.closeDrawers()
             return@setNavigationItemSelectedListener true
         }
         drawerToggle.syncState()
+    }
+
+    private fun setupViewModel() {
+        viewModel.apply {
+            openSearchEvent.observe(this@MainFragment, Observer { openSearch() })
+            openOfflineNewsEvent.observe(this@MainFragment, Observer { openOfflineNews() })
+            openOfflineMoviesEvent.observe(this@MainFragment, Observer { openOfflineMovies() })
+        }
+    }
+
+    override fun openSearch() {
+        val searchFragment = SearchFragment.newInstance()
+        replaceFragment(searchFragment, SearchFragment.SEARCH_TAG, true)
+    }
+
+    override fun openOfflineNews() {
+        // TODO open offline news screen here !
+    }
+
+    override fun openOfflineMovies() {
+        // TODO open offline movies screen here !
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {

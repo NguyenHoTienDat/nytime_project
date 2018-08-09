@@ -26,7 +26,7 @@ interface MovieRepository : Repository {
 
     fun getCasts(movieId: Int): Single<List<Cast>>
 
-    fun getSearchMovies(query: String, page: Int): Observable<List<Movie>>
+    fun getSearchMovies(query: String, page: Int): Observable<MovieInfo>
 
     fun getMoviesByGenre(genreId: String, page: Int): Single<List<Movie>>
 

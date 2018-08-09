@@ -1,6 +1,7 @@
 package com.framgia.newyorktime.ui.moviedetail
 
 import android.databinding.BindingAdapter
+import android.support.v4.widget.CircularProgressDrawable
 import android.support.v7.widget.RecyclerView
 import android.widget.ImageView
 import com.bumptech.glide.Glide
@@ -20,10 +21,17 @@ object MovieDetailBindings {
     @JvmStatic
     fun ImageView.setMovieImage(url: String?) {
         url?.let {
+            val resource = context.resources
+            val circularProgressDrawable = CircularProgressDrawable(context).apply {
+                strokeWidth = resource.getDimensionPixelOffset(R.dimen.dp_4).toFloat()
+                centerRadius = resource.getDimensionPixelOffset(R.dimen.dp_8).toFloat()
+                start()
+            }
             val fullUrl = MovieApi.BASE_IMAGE_URL + it
             Glide.with(context)
                 .load(fullUrl)
                 .apply(RequestOptions().centerCrop())
+                .apply(RequestOptions.placeholderOf(circularProgressDrawable))
                 .apply(RequestOptions.errorOf(R.drawable.new_york_time_header).centerCrop())
                 .into(this)
         }
