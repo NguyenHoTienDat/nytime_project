@@ -11,7 +11,6 @@ import com.framgia.newyorktime.BR
 import com.framgia.newyorktime.R
 import com.framgia.newyorktime.base.fragment.BaseFragment
 import com.framgia.newyorktime.databinding.FragmentNyDetailsBinding
-import com.framgia.newyorktime.model.nytime.StoryItem
 import com.framgia.newyorktime.util.custom.WebViewChromeClient
 import com.framgia.newyorktime.util.custom.WebViewClientCustom
 import com.framgia.newyorktime.util.popFragmentOut
@@ -20,12 +19,12 @@ import kotlinx.android.synthetic.main.fragment_ny_details.*
 class NyDetailFragment : BaseFragment<FragmentNyDetailsBinding, NyDetailViewModel>() {
 
     companion object {
-        fun newInstance(item: StoryItem) = NyDetailFragment().apply {
-            arguments = Bundle().apply { putParcelable(ARGUMENT_STORY, item) }
+        fun newInstance(url: String) = NyDetailFragment().apply {
+            arguments = Bundle().apply { putString(ARGUMENT_ITEM_URL, url) }
         }
 
         const val TAG = "NyDetailFragment"
-        private const val ARGUMENT_STORY = "ARGUMENT_STORY"
+        private const val ARGUMENT_ITEM_URL = "ARGUMENT_ITEM_URL"
     }
 
     override val bindingVariable: Int
@@ -36,7 +35,6 @@ class NyDetailFragment : BaseFragment<FragmentNyDetailsBinding, NyDetailViewMode
     override val layoutId: Int
         get() = R.layout.fragment_ny_details
 
-    @SuppressLint("SetJavaScriptEnabled")
     override fun initComponent(savedInstanceState: Bundle?) {
         getArgumentData()
         observeViewModel()
@@ -54,12 +52,13 @@ class NyDetailFragment : BaseFragment<FragmentNyDetailsBinding, NyDetailViewMode
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private fun webSetting() {
         web_view_ny.run {
             settings.javaScriptEnabled = true
             webViewClient = WebViewClientCustom()
             webChromeClient = WebViewChromeClient(progress_bar_ny)
-            loadUrl(viewModel.storyItem?.url ?: "")
+            loadUrl(viewModel.url)
             setOnKeyListener(View.OnKeyListener { _, keyCode, _ ->
                 if (keyCode == KeyEvent.KEYCODE_BACK && canGoBack()) {
                     goBack()
@@ -72,7 +71,7 @@ class NyDetailFragment : BaseFragment<FragmentNyDetailsBinding, NyDetailViewMode
     }
 
     private fun getArgumentData() {
-        viewModel.storyItem = arguments?.getParcelable(ARGUMENT_STORY)
+        viewModel.url = arguments?.getString(ARGUMENT_ITEM_URL) ?: ""
     }
 
     private fun observeViewModel() {

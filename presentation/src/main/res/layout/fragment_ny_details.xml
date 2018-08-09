@@ -18,16 +18,11 @@
             android:id="@+id/toolbar_detail"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
             android:elevation="@dimen/dp_12"
             app:navigationIcon="@drawable/ic_arrow_back"
-            app:title="@string/top_stories_title" />
-
-        <View
-            android:id="@+id/view_div"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_1"
-            android:background="@android:color/darker_gray"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_detail"/>
+            app:title="@string/top_stories_title"
+            app:titleTextColor="@android:color/white" />
 
         <WebView
             android:id="@+id/web_view_ny"
@@ -38,9 +33,9 @@
 
         <ProgressBar
             android:id="@+id/progress_bar_ny"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_4"
-            style="?android:attr/progressBarStyleHorizontal"
-            app:layout_constraintTop_toBottomOf="@+id/view_div" />
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_detail" />
     </android.support.constraint.ConstraintLayout>
 </layout>
