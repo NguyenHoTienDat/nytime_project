@@ -1,9 +1,6 @@
 package com.framgia.data.local.database
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Delete
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 import com.framgia.data.model.NyTimeLocalEntity
 import io.reactivex.Single
 
@@ -18,7 +15,7 @@ abstract class NewsDao {
     @Query("SELECT * FROM nytime")
     abstract fun getLocalStories(): Single<List<NyTimeLocalEntity>>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertStories(items: List<NyTimeLocalEntity>)
 
     @Delete
