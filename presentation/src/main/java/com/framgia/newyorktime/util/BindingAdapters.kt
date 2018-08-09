@@ -58,3 +58,8 @@ fun setImageStateResource(view: ImageView, res: Int, state: Boolean) {
     view.setImageResource(res)
     view.isSelected = state
 }
+
+@BindingAdapter("selected")
+fun setImageSelectState(view: ImageView, state: Boolean) {
+    view.isSelected = state
+}
