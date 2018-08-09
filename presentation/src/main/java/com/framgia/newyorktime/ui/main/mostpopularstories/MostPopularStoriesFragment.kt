@@ -43,6 +43,8 @@ class MostPopularStoriesFragment :
             recycler_popular.adapter = this
         }
 
+        recycler_popular.itemAnimator.changeDuration = 0
+
         swipe_popular.setOnRefreshListener { reloadData() }
         observeViewModel()
     }
@@ -59,8 +61,23 @@ class MostPopularStoriesFragment :
         replaceFragment(NyDetailFragment.newInstance(item.url ?: ""), NyDetailFragment.TAG, true)
     }
 
-    override fun onSaveClick(item: PopularItem) {
+    override fun onSaveClick(item: PopularItem, position: Int) {
+        with(popularAdapter) {
+            submitList(viewModel.popular.value.apply {
+                this?.get(position)?.let { item ->
+                    when (item.isSelect) {
+                        true -> {
+                            this[position].isSelect = false
+                        }
+                        else -> {
+                            this[position].isSelect = true
+                        }
+                    }
+                }
 
+            })
+            notifyItemChanged(position)
+        }
     }
 
     override fun onShareClick(item: PopularItem) {
@@ -97,7 +114,7 @@ class MostPopularStoriesFragment :
     }
 
     private fun reloadData() {
-        viewModel.getMostPopular()
+        viewModel.checkItemNeedTobeSaveOfDelete(true)
     }
 
     companion object {
