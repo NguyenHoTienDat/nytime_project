@@ -34,8 +34,23 @@ class TopStoriesFragment : BaseFragment<FragmentTopStoriesBinding, TopStoriesVie
     private lateinit var storyAdapter: TopStoryAdapter
 
     private val itemStoryListener = object : TopStoryAdapter.OnStoryItemClickListener {
-        override fun onSaveClick(item: StoryItem) {
+        override fun onSaveClick(item: StoryItem, position: Int) {
+            with(storyAdapter) {
+                submitList(viewModel.stories.value.apply {
+                    this?.get(position)?.let { item ->
+                        when (item.isSelect) {
+                            true -> {
+                                this[position].isSelect = false
+                            }
+                            else -> {
+                                this[position].isSelect = true
+                            }
+                        }
+                    }
 
+                })
+                notifyItemChanged(position)
+            }
         }
 
         override fun onShareClick(item: StoryItem) {
@@ -50,6 +65,9 @@ class TopStoriesFragment : BaseFragment<FragmentTopStoriesBinding, TopStoriesVie
 
     private val itemGenreListener = object : BaseUserActionsListener<StoryGenreItem> {
         override fun onItemViewClick(v: View, item: StoryGenreItem, position: Int) {
+            //execute save state before change item list
+            viewModel.checkItemNeedTobeSaveOfDelete()
+
             genreAdapter.run {
                 this@TopStoriesFragment.activity?.let {
                     SharedPreUtils.saveStoryType(it, item.name)
@@ -102,6 +120,10 @@ class TopStoriesFragment : BaseFragment<FragmentTopStoriesBinding, TopStoriesVie
             reloadData()
         }
 
+        text_view_offline.setOnClickListener { openOfflineTab() }
+
+        recycler_story.itemAnimator.changeDuration = 0
+        recycler_genre.itemAnimator.changeDuration = 0
         observeViewModel()
     }
 
@@ -118,11 +140,14 @@ class TopStoriesFragment : BaseFragment<FragmentTopStoriesBinding, TopStoriesVie
         }, SHARE_TITLE))
     }
 
+    override fun openOfflineTab() {
+
+    }
+
     private fun observeViewModel() {
         viewModel.stories.observe(this, Observer {
             it?.let { it1 ->
                 storyAdapter.submitList(it1)
-                recycler_story.scrollToPosition(viewModel.curStoriesPosition)
                 viewModel.makeLoadingState(false)
                 if (swipe_stories.isRefreshing) {
                     swipe_stories.isRefreshing = false

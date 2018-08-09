@@ -2,6 +2,7 @@ package com.framgia.newyorktime.di.module
 
 import android.app.Application
 import android.content.Context
+import com.framgia.data.di.module.LocalModule
 import com.framgia.data.di.module.NetworkModule
 import com.framgia.data.di.module.RepositoryModule
 import com.framgia.newyorktime.rx.AppSchedulerProvider
@@ -16,7 +17,7 @@ import javax.inject.Singleton
  * Description:
  */
 
-@Module(includes = [NetworkModule::class, RepositoryModule::class, ViewModelModule::class])
+@Module(includes = [NetworkModule::class, RepositoryModule::class, ViewModelModule::class, LocalModule::class])
 class AppModule {
 
     @Singleton

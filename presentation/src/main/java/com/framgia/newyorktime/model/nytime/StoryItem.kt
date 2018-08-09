@@ -1,6 +1,7 @@
 package com.framgia.newyorktime.model.nytime
 
 import android.os.Parcelable
+import com.framgia.domain.model.NyTimeLocal
 import com.framgia.domain.model.Story
 import com.framgia.newyorktime.base.model.ItemMapper
 import com.framgia.newyorktime.base.model.ModelItem
@@ -13,7 +14,9 @@ data class StoryItem(val title: String,
                      val url: String,
                      val byline: String,
                      val imageUrl: String,
-                     val publishDate: String) : ModelItem(), Parcelable
+                     val publishDate: String,
+                     var isSelect: Boolean = false,
+                     var isSaved: Boolean = false) : ModelItem(), Parcelable
 
 class StoryItemMapper @Inject constructor() : ItemMapper<Story, StoryItem> {
 
@@ -26,4 +29,25 @@ class StoryItemMapper @Inject constructor() : ItemMapper<Story, StoryItem> {
             byline = model.byline,
             imageUrl = if (model.multimedia.isNotEmpty()) model.multimedia[model.multimedia.size - 1].url else "",
             publishDate = model.publishedDate)
+}
+
+class StoryLocalMapper @Inject constructor() : ItemMapper<NyTimeLocal, StoryItem> {
+    override fun mapToPresentation(model: NyTimeLocal): StoryItem = StoryItem(
+            url = model.url,
+            title = model.title,
+            abstract = model.abstract,
+            byline = model.byline,
+            imageUrl = model.imageUrl,
+            publishDate = model.publishDate
+    )
+
+    override fun mapToDomain(modelItem: StoryItem): NyTimeLocal = NyTimeLocal(
+            url = modelItem.url,
+            title = modelItem.title,
+            abstract = modelItem.abstract,
+            byline = modelItem.byline,
+            imageUrl = modelItem.imageUrl,
+            publishDate = modelItem.publishDate
+    )
+
 }

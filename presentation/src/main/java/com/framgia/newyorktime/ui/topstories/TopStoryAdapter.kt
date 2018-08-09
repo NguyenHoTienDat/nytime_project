@@ -17,7 +17,7 @@ class TopStoryAdapter(private val itemListener: OnStoryItemClickListener)
             }
 
             override fun areContentsTheSame(oldItem: StoryItem, newItem: StoryItem): Boolean {
-                return oldItem == newItem
+                return oldItem.isSelect == newItem.isSelect
             }
 
         }
@@ -38,6 +38,7 @@ class TopStoryAdapter(private val itemListener: OnStoryItemClickListener)
                 story = item
                 dateUtil = DateTimeUtil
                 listener = itemListener
+                position = adapterPosition
                 executePendingBindings()
                 root.setOnClickListener { itemListener.onItemViewClick(root, item, adapterPosition) }
             }
@@ -46,7 +47,7 @@ class TopStoryAdapter(private val itemListener: OnStoryItemClickListener)
     }
 
     interface OnStoryItemClickListener : BaseUserActionsListener<StoryItem> {
-        fun onSaveClick(item: StoryItem)
+        fun onSaveClick(item: StoryItem, position: Int)
 
         fun onShareClick(item: StoryItem)
     }
