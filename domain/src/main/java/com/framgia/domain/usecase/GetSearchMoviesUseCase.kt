@@ -2,6 +2,7 @@ package com.framgia.domain.usecase
 
 import com.framgia.domain.base.UseCase
 import com.framgia.domain.model.Movie
+import com.framgia.domain.model.MovieInfo
 import com.framgia.domain.repository.MovieRepository
 import io.reactivex.Observable
 import javax.inject.Inject
@@ -11,11 +12,11 @@ import javax.inject.Inject
  * By: Sang
  * Description:
  */
-class GetSeachMoviesUseCase @Inject constructor(
+class GetSearchMoviesUseCase @Inject constructor(
     private val movieRepository: MovieRepository
-) : UseCase<GetSeachMoviesUseCase.Params, Observable<List<Movie>>>() {
+) : UseCase<GetSearchMoviesUseCase.Params, Observable<MovieInfo>>() {
 
-    override fun createObservable(params: Params): Observable<List<Movie>> =
+    override fun createObservable(params: Params): Observable<MovieInfo> =
         movieRepository.getSearchMovies(params.query, params.page)
 
     override fun onCleared() {

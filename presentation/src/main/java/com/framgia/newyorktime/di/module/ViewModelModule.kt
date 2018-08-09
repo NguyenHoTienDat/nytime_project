@@ -9,6 +9,7 @@ import com.framgia.newyorktime.ui.main.nowplayingmovies.NowPlayingMoviesViewMode
 import com.framgia.newyorktime.ui.main.topratemovies.TopRateMoviesViewModel
 import com.framgia.newyorktime.ui.moviedetail.MovieDetailViewModel
 import com.framgia.newyorktime.ui.nydetail.NyDetailViewModel
+import com.framgia.newyorktime.ui.search.SearchViewModel
 import com.framgia.newyorktime.ui.topstories.TopStoriesViewModel
 import dagger.Binds
 import dagger.Module
@@ -59,4 +60,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(NyDetailViewModel::class)
     abstract fun bindNyDetailViewModel(nyDetailViewModel: NyDetailViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchViewModel::class)
+    abstract fun bindSearchViewModel(searchViewModel: SearchViewModel): ViewModel
 }

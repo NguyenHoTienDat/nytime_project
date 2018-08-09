@@ -38,17 +38,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription" />
 
-        <ImageView
-            android:id="@+id/image_menu"
-            android:layout_width="@dimen/dp_16"
-            android:layout_height="@dimen/dp_16"
-            android:layout_marginEnd="@dimen/dp_16"
-            android:layout_marginTop="@dimen/dp_16"
-            android:src="@drawable/ic_line"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription" />
-
         <TextView
             android:id="@+id/text_name_movie"
             android:layout_width="0dp"
@@ -59,7 +48,8 @@
             android:text="@{movie.title}"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="@dimen/sp_14"
-            app:layout_constraintEnd_toStartOf="@id/image_menu"
+            android:layout_marginEnd="@dimen/dp_16"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/image_avatar"
             app:layout_constraintTop_toTopOf="@id/image_avatar" />
 
@@ -82,15 +72,6 @@
             app:layout_constraintBottom_toBottomOf="@id/text_rate"
             app:layout_constraintStart_toEndOf="@id/text_rate"
             app:layout_constraintTop_toTopOf="@id/text_rate"
-            tools:ignore="ContentDescription" />
-
-        <ImageView
-            android:id="@+id/image_favorite"
-            android:layout_width="@dimen/dp_16"
-            android:layout_height="@dimen/dp_16"
-            android:src="@drawable/ic_favorite_border"
-            app:layout_constraintBottom_toBottomOf="@id/image_avatar"
-            app:layout_constraintEnd_toEndOf="@id/image_menu"
             tools:ignore="ContentDescription" />
     </android.support.constraint.ConstraintLayout>
 </layout>

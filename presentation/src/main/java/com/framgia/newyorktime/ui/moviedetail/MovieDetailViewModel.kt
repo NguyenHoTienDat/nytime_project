@@ -23,7 +23,7 @@ class MovieDetailViewModel @Inject constructor(
     private val schedulerProvider: SchedulerProvider,
     private val videoItemMapper: VideoItemMapper,
     private val castItemMapper: CastItemMapper
-) : BaseViewModel() {
+) : BaseViewModel(getCastsUseCase, getVideosMovieUseCase) {
 
     lateinit var movie: MovieItem
 

@@ -18,11 +18,19 @@ class NowPlayingMoviesAdapter(private val userActionsListener: NowPlayingUserAct
             NowPlayingMoviesAdapter.ViewHolder>(
         object : DiffUtil.ItemCallback<MovieItem>() {
 
-            override fun areItemsTheSame(oldItem: MovieItem, newItem: MovieItem): Boolean =
-                oldItem.id == newItem.id
+            override fun areItemsTheSame(oldItem: MovieItem?, newItem: MovieItem?): Boolean =
+                if (oldItem == null || newItem == null) {
+                    false
+                } else {
+                    oldItem.id == newItem.id
+                }
 
-            override fun areContentsTheSame(oldItem: MovieItem, newItem: MovieItem): Boolean =
-                oldItem.title == newItem.title
+            override fun areContentsTheSame(oldItem: MovieItem?, newItem: MovieItem?): Boolean =
+                if (oldItem == null || newItem == null) {
+                    false
+                } else {
+                    oldItem.title == newItem.title
+                }
         }
     ) {
 
@@ -30,8 +38,11 @@ class NowPlayingMoviesAdapter(private val userActionsListener: NowPlayingUserAct
         get() = R.layout.item_movie
 
     fun setMovies(items: List<MovieItem>?) {
-        submitList(items)
-        notifyItemInserted(itemCount)
+        items?.let {
+            val newList = ArrayList<MovieItem>()
+            it.forEach { movieItem -> newList.add(movieItem) }
+            submitList(newList)
+        }
     }
 
     override fun getViewHolder(viewDataBinding: ItemMovieBinding): ViewHolder =
