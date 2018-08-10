@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.ActionBarDrawerToggle
+import android.util.Log
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -14,6 +16,7 @@ import com.framgia.newyorktime.BR
 import com.framgia.newyorktime.R
 import com.framgia.newyorktime.base.fragment.BaseFragment
 import com.framgia.newyorktime.databinding.FragmentMainBinding
+import com.framgia.newyorktime.ui.offlinemovie.OfflineMovieFragment
 import com.framgia.newyorktime.ui.search.SearchFragment
 import com.framgia.newyorktime.util.*
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -105,10 +108,11 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(), MainNav
                 R.id.action_offline_news -> viewModel.loadOfflineNews()
                 R.id.action_offline_movies -> viewModel.loadOfflineMovies()
             }
-            drawerLayout.closeDrawers()
+            drawerLayout.closeDrawer(Gravity.START)
             return@setNavigationItemSelectedListener true
         }
         drawerToggle.syncState()
+        viewDataBinding.navigation.setCheckedItem(R.id.action_top_stories)
     }
 
     private fun setupViewModel() {
@@ -129,7 +133,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(), MainNav
     }
 
     override fun openOfflineMovies() {
-        // TODO open offline movies screen here !
+        val offlineMovieFragment = OfflineMovieFragment.newInstance()
+        replaceFragment(offlineMovieFragment, OfflineMovieFragment.OFFLINE_MOVIE_TAG, true)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {

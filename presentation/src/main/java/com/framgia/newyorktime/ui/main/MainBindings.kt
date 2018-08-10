@@ -4,6 +4,7 @@ import android.databinding.BindingAdapter
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.CircularProgressDrawable
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -52,6 +53,7 @@ object MainBindings {
     @BindingAdapter("pagePosition")
     @JvmStatic
     fun ViewPager.setCurrentPage(position: Int) {
+        if (currentItem == position) return
         setCurrentItem(position, true)
     }
 }

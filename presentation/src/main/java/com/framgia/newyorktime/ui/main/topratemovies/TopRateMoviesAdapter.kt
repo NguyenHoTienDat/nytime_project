@@ -27,7 +27,7 @@ class TopRateMoviesAdapter(private val userActionsListener: TopRateUserActionsLi
     ) {
 
     override val layoutInt: Int
-        get() = R.layout.item_movie
+        get() = R.layout. item_movie
 
     override fun getViewHolder(viewDataBinding: ItemMovieBinding): ViewHolder =
         ViewHolder(viewDataBinding)

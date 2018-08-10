@@ -20,7 +20,6 @@ class EndlessRecyclerScrollListener(private val loadMoreEvent: (() -> Unit)) :
             val totalItem = recyclerView.adapter.itemCount
             val lastVisibleItemPosition =
                 (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-            Log.d("TAG", "---onScrolled: $isLoadMore---")
             if (!isLoadMore && (totalItem < lastVisibleItemPosition + 3)) {
                 isLoadMore = true
                 loadMoreEvent.invoke()

@@ -57,7 +57,6 @@ class SearchViewModel @Inject constructor(
                     currentPage++
                 },
                 onError = {
-                    Log.d("TAG", "error: ${it.message}")
                     isLoadData.value = false
                 }
             )
