@@ -15,7 +15,7 @@ class PopularAdapter(private val itemListener: OnPopularItemClickListener)
     : BaseRecyclerAdapter<PopularItem, ItemPopularBinding>(
         diffCallback = object : DiffUtil.ItemCallback<PopularItem>() {
             override fun areItemsTheSame(oldItem: PopularItem, newItem: PopularItem): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem.url == newItem.url
             }
 
             override fun areContentsTheSame(oldItem: PopularItem, newItem: PopularItem): Boolean {
@@ -48,7 +48,8 @@ class PopularAdapter(private val itemListener: OnPopularItemClickListener)
     }
 
     interface OnPopularItemClickListener : BaseUserActionsListener<PopularItem> {
-        fun onSaveClick(item: PopularItem)
+        fun onSaveClick(item: PopularItem, position: Int)
+
         fun onShareClick(item: PopularItem)
     }
 }

@@ -66,7 +66,7 @@ class TopStoriesFragment : BaseFragment<FragmentTopStoriesBinding, TopStoriesVie
     private val itemGenreListener = object : BaseUserActionsListener<StoryGenreItem> {
         override fun onItemViewClick(v: View, item: StoryGenreItem, position: Int) {
             //execute save state before change item list
-            viewModel.checkItemNeedTobeSaveOfDelete()
+            viewModel.checkItemNeedTobeSaveOfDelete(false)
 
             genreAdapter.run {
                 this@TopStoriesFragment.activity?.let {
@@ -172,9 +172,7 @@ class TopStoriesFragment : BaseFragment<FragmentTopStoriesBinding, TopStoriesVie
 
     private fun reloadData() {
         //update list data
-        this@TopStoriesFragment.activity?.let {
-            viewModel.getTopStories(SharedPreUtils.getStoryType(it), true)
-        }
+        viewModel.checkItemNeedTobeSaveOfDelete(true)
     }
 
     private fun getCurrentStoriesScrollPos() = if (recycler_story.layoutManager is LinearLayoutManager) {

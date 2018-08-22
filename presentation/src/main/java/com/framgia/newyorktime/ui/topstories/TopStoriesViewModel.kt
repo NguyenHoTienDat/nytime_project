@@ -51,7 +51,7 @@ class TopStoriesViewModel @Inject constructor(
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun stopViewModel() {
-        checkItemNeedTobeSaveOfDelete()
+        checkItemNeedTobeSaveOfDelete(false)
     }
 
     /**
@@ -108,8 +108,14 @@ class TopStoriesViewModel @Inject constructor(
      * Before this frg is stopped, we check selected state of each object
      * User can save of non save many time, but may be state still same the origin state
      * So when state of event by user different with origin state then we update database
+     *
+     * @param isReloadData : we have 2 cases to update save state : one is normal update when frg onStop.
+     * In this case we normaly execute 2 asynchronous task is save and delete
+     * But the other is reload by swipe, we must handle synchronous at thit case, update db done before update ui
+     * So we call save task first, when it done, it auto call del task, and when del task done it auto
+     * call reload data
      */
-    fun checkItemNeedTobeSaveOfDelete() {
+    fun checkItemNeedTobeSaveOfDelete(isReloadData: Boolean) {
         stories.value?.let {
             for (item: StoryItem in it) {
                 if (item.isSelect != item.isSaved) {
@@ -119,8 +125,11 @@ class TopStoriesViewModel @Inject constructor(
                     }
                 }
             }
-            saveLocalStories()
-            deleteLocalStories()
+            if (isReloadData) {saveLocalStories(isReloadData)}
+            else {
+                saveLocalStories(isReloadData)
+                deleteLocalStories(isReloadData)
+            }
         }
     }
 
@@ -170,7 +179,7 @@ class TopStoriesViewModel @Inject constructor(
     /**
      * Save all item need to be saved in local
      */
-    private fun saveLocalStories() {
+    private fun saveLocalStories(isReloadData: Boolean) {
         val domainItems = mutableListOf<NyTimeLocal>().apply {
             addAll(saveLocalStories.map { storyLocalMapper.mapToDomain(it) })
             curStoryType?.let { type -> map { it.type = type } }
@@ -179,7 +188,11 @@ class TopStoriesViewModel @Inject constructor(
         Completable.fromAction {
             saveStoryLocalUseCase.createObservable(SaveStoryLocalUseCase.Params(domainItems))
         }.observeOn(schedulerProvider.ui())
-                .subscribeOn(schedulerProvider.io()).subscribe()
+                .subscribeOn(schedulerProvider.io()).subscribeBy(
+                        onComplete = {
+                            if (isReloadData) deleteLocalStories(isReloadData)
+                        }
+                )
 
         //clear this list after save for the next time do this behaviour
         saveLocalStories.clear()
@@ -188,7 +201,7 @@ class TopStoriesViewModel @Inject constructor(
     /**
      * UnSave item in local
      */
-    private fun deleteLocalStories() {
+    private fun deleteLocalStories(isReloadData: Boolean) {
         val domainItems = mutableListOf<NyTimeLocal>().apply {
             addAll(deleteLocalStories.map { storyLocalMapper.mapToDomain(it) })
         }
@@ -196,7 +209,11 @@ class TopStoriesViewModel @Inject constructor(
         Completable.fromAction {
             unSaveStoryLocalUseCase.createObservable(UnSaveStoryLocalUseCase.Params(domainItems))
         }.observeOn(schedulerProvider.ui())
-                .subscribeOn(schedulerProvider.io()).subscribe()
+                .subscribeOn(schedulerProvider.io()).subscribeBy(
+                        onComplete = {
+                            if (isReloadData) getTopStories(isSwipe = true)
+                        }
+                )
 
         //clear this list after unsave for the next time do this behaviour
         deleteLocalStories.clear()
