@@ -14,8 +14,11 @@ import com.framgia.newyorktime.model.nytime.StoryItemMapper
 import com.framgia.newyorktime.model.nytime.StoryLocalMapper
 import com.framgia.newyorktime.rx.SchedulerProvider
 import com.framgia.newyorktime.util.SharedPreUtils
+import com.framgia.newyorktime.util.custom.SingleLiveEvent
 import io.reactivex.Completable
+import io.reactivex.observers.DisposableObserver
 import io.reactivex.rxkotlin.subscribeBy
+import retrofit2.Response
 import javax.inject.Inject
 
 
@@ -30,6 +33,8 @@ class TopStoriesViewModel @Inject constructor(
         private val storyLocalMapper: StoryLocalMapper,
         private val schedulerProvider: SchedulerProvider
 ) : BaseViewModel() {
+    val liveDataTest = MutableLiveData<Boolean>()
+    val singleTest = SingleLiveEvent<Boolean>()
 
     val stories = MutableLiveData<List<StoryItem>>()
     val isDataLoading = MutableLiveData<Boolean>()
@@ -41,6 +46,11 @@ class TopStoriesViewModel @Inject constructor(
     var curStoriesPosition = 0
     private var curStoryType: String? = null
     private var isFirstLoad = true
+
+    init {
+        liveDataTest.value = true
+        singleTest.value = true
+    }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun startViewModel() {
@@ -125,8 +135,9 @@ class TopStoriesViewModel @Inject constructor(
                     }
                 }
             }
-            if (isReloadData) {saveLocalStories(isReloadData)}
-            else {
+            if (isReloadData) {
+                saveLocalStories(isReloadData)
+            } else {
                 saveLocalStories(isReloadData)
                 deleteLocalStories(isReloadData)
             }
@@ -138,7 +149,7 @@ class TopStoriesViewModel @Inject constructor(
      * After this process ( only when all item is checked ) we show data list to ui
      * In both onSuccess and onError we execute show ui. Because this response is only save state check
      */
-    private fun checkStoryExist(storiesItem: List<StoryItem>, storyType: String?) {
+    fun checkStoryExist(storiesItem: List<StoryItem>, storyType: String?) {
         var count = 0
         storiesItem.map { item ->
             findExistLocalStoryUseCase.createObservable(FindExistLocalStoryUseCase.Params(item.url))

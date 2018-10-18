@@ -83,4 +83,7 @@ dependencies {
     implementation des.glide.runtime
     implementation des.glide.compiler
 
+    //mockito
+    implementation des.mockito.core
+    testImplementation 'org.mockito:mockito-inline:2.13.0'
 }
