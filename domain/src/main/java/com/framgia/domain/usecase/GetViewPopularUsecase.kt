@@ -7,9 +7,9 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class GetViewPopularUsecase @Inject constructor(private val popularRepo: PopularRepository)
-    : UseCase<GetViewPopularUsecase.Params, Single<List<MostPopular>>>() {
+    : UseCase<Void?, Single<List<MostPopular>>>() {
 
-    override fun createObservable(params: Params): Single<List<MostPopular>> {
+    override fun createObservable(params: Void?): Single<List<MostPopular>> {
         return popularRepo.getMostViewPopular()
     }
 
@@ -17,5 +17,5 @@ class GetViewPopularUsecase @Inject constructor(private val popularRepo: Popular
 
     }
 
-    class Params
+    fun test(input: Int) = input
 }

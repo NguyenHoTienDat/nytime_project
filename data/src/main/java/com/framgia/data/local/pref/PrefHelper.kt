@@ -7,5 +7,7 @@ package com.framgia.data.local.pref
  */
 interface PrefHelper {
 
-    fun isFirstRun(): Boolean
+    fun isFirstRunComplete(): Boolean
+
+    fun setFirstRunComplete()
 }

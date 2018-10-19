@@ -19,11 +19,7 @@ import org.mockito.junit.MockitoJUnitRunner
  *       Assert.assertEquals(expectObj, actualObj) bởi vì khi mapper, có thể bên pre có số thuộc tính
  *       ít hơn bên domain. nếu so sánh cả obj sẽ sai. Chỉ so sánh nhưng j map sang thôi
  */
-@RunWith(MockitoJUnitRunner::class)
 class StoryMapperTest {
-
-    @Mock
-    private lateinit var mockStoryMapper: StoryItemMapper
 
     @Spy
     private lateinit var spyStoryMapper: StoryItemMapper
@@ -34,30 +30,8 @@ class StoryMapperTest {
     }
 
     /**
-     * Fun này dùng mock để test. Với mock ta phải giả lập kết quả khi thực thi fun nào đó của obj
-     */
-    @Test
-    fun mockToDomainTest() {
-        val expectValue = Story("My Title Item", "My Abs Item",
-                "http://Item", "abcItem", "http://imageItem", "18/10/2018")
-
-        // Do mock là giả haonf toàn.Nếu k giả lập value ntn thì khi gọi fun của obj mock luôn return null hoặc donothing
-        `when`(mockStoryMapper.mapToDomain(createStoryItem())).thenReturn(expectValue)
-
-        //neu k co doan when o tren thi var nay se null va test fail luon (chua can xet den logic vi null da sai luon roi)
-        val actualValue = mockStoryMapper.mapToDomain(createStoryItem())
-
-        assert(expectValue.section == actualValue.section)
-        assert(expectValue.subsection == actualValue.subsection)
-        assert(expectValue.title == actualValue.title)
-        assert(expectValue.abstract == actualValue.abstract)
-        assert(expectValue.url == actualValue.url)
-        assert(expectValue.byline == actualValue.byline)
-    }
-
-    /**
      * Fun này dùng spy để test. Do spy vẫn có 1 nửa là obj thật ( ta muốn giả chỗ nào thì giả ). Nên khi gọi
-     * fun thì logic trong fun thật sẽ đc exe nên k cần giả lập như mock ở trên
+     * fun thì logic trong fun thật sẽ đc exe nên k cần giả lập như mock
      *
      * Hiện tại case này sẽ faile. Kp do logic sai. Mà do fun mapToDomain bên mapper ta làm ntn
      * override fun mapToDomain(item: StoryItem): Story = Story()
@@ -70,27 +44,12 @@ class StoryMapperTest {
 
         val actualValue = spyStoryMapper.mapToDomain(createStoryItem())
 
-        assert(expectValue.section == actualValue.section)
-        assert(expectValue.subsection == actualValue.subsection)
-        assert(expectValue.title == actualValue.title)
-        assert(expectValue.abstract == actualValue.abstract)
-        assert(expectValue.url == actualValue.url)
-        assert(expectValue.byline == actualValue.byline)
-    }
-
-    /**
-     * Tương tự mock test map pre
-     */
-    @Test
-    fun mockToPresentationTest() {
-        val expectValue = StoryItem("My Title", "My Abs",
-                "http://", "abc", "http://image", "18/10/2018")
-
-        `when`(mockStoryMapper.mapToPresentation(createStory())).thenReturn(expectValue)
-
-        val actualValue = mockStoryMapper.mapToPresentation(createStory())
-
-        assert(expectValue.title == actualValue.title)
+        Assert.assertEquals(expectValue.section, actualValue.section)
+        Assert.assertEquals(expectValue.subsection, actualValue.subsection)
+        Assert.assertEquals(expectValue.title, actualValue.title)
+        Assert.assertEquals(expectValue.abstract, actualValue.abstract)
+        Assert.assertEquals(expectValue.url, actualValue.url)
+        Assert.assertEquals(expectValue.byline, actualValue.byline)
     }
 
     /**
