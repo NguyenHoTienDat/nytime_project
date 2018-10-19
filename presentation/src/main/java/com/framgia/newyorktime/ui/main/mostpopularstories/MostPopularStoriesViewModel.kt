@@ -25,7 +25,6 @@ import javax.inject.Inject
  * Description:
  */
 class MostPopularStoriesViewModel @Inject constructor(
-        private val application: Application,
         private val viewPopularUseCase: GetViewPopularUsecase,
         private val savePopularLocalUseCase: SavePopularLocalUseCase,
         private val unSavePopularLocalUseCase: UnSavePopularLocalUseCase,
@@ -68,9 +67,8 @@ class MostPopularStoriesViewModel @Inject constructor(
      * be update, user can click in save icon and make false logic
      */
 
-    private fun getMostPopular() {
-        compositeDisposable.add(viewPopularUseCase.createObservable(
-                GetViewPopularUsecase.Params())
+    fun getMostPopular() {
+        compositeDisposable.add(viewPopularUseCase.createObservable(null)
                 .observeOn(schedulerProvider.ui())
                 .subscribeOn(schedulerProvider.io())
                 .map { it.map { itemMapper.mapToPresentation(it) } }
@@ -117,8 +115,9 @@ class MostPopularStoriesViewModel @Inject constructor(
                 }
             }
 
-            if (isReloadData) {saveLocalPopulars(isReloadData)}
-            else {
+            if (isReloadData) {
+                saveLocalPopulars(isReloadData)
+            } else {
                 saveLocalPopulars(isReloadData)
                 deleteLocalPopulars(isReloadData)
             }
