@@ -4,11 +4,11 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
-import android.util.Log
 import com.framgia.data.BuildConfig
 import com.framgia.data.remote.api.MostPopularApi
 import com.framgia.data.remote.api.MovieApi
 import com.framgia.data.remote.api.StoryApi
+import com.framgia.data.remote.mockapi.MockStoryApi
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
@@ -47,12 +47,9 @@ class NetworkModule {
                     .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
                     .addInterceptor { chain ->
                         var request = chain.request()
-                        request = if (hasNetwork(context)!!)
-                        {
+                        request = if (hasNetwork(context)!!) {
                             request.newBuilder().header("Cache-Control", "public, max-age=" + 5).build()
-                        }
-                        else
-                        {
+                        } else {
 
                             request.newBuilder().header("Cache-Control", "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7).build()
                         }
@@ -88,6 +85,7 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideStoryApi(@Named(BASE_TOP_STORIES_URL) retrofit: Retrofit): StoryApi =
+            if (BuildConfig.MOCK_DATA) MockStoryApi() else
             retrofit.create(StoryApi::class.java)
 
     @Provides
