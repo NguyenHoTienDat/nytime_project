@@ -125,7 +125,7 @@ class MostPopularStoriesViewModel @Inject constructor(
     }
 
     /**
-     * Iterator each item in story list get from api and check exist in local
+     * Iterator each item in story.json list get from api and check exist in local
      * After this process ( only when all item is checked ) we show data list to ui
      * In both onSuccess and onError we execute show ui. Because this response is only save state check
      */
