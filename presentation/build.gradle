@@ -31,6 +31,21 @@ android {
     dataBinding {
         enabled = true
     }
+
+    flavorDimensions "tier"
+    productFlavors {
+        develop {
+
+        }
+
+        mock {
+
+        }
+
+        production {
+          
+        }
+    }
 }
 
 dependencies {
