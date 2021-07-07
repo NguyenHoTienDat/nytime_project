@@ -1,6 +1,7 @@
 package com.framgia.newyorktime.ui.main
 
 import com.framgia.newyorktime.base.viewmodel.BaseViewModel
+import com.framgia.newyorktime.util.custom.SingleLiveEvent
 import javax.inject.Inject
 
 /**
@@ -10,4 +11,20 @@ import javax.inject.Inject
  */
 class MainViewModel @Inject constructor() : BaseViewModel() {
 
+    val openPageEvent = SingleLiveEvent<Int>()
+    val openSearchEvent = SingleLiveEvent<Void>()
+    val openOfflineNewsEvent = SingleLiveEvent<Void>()
+    val openOfflineMoviesEvent = SingleLiveEvent<Void>()
+
+    fun loadSearch() {
+        openSearchEvent.call()
+    }
+
+    fun loadOfflineNews() {
+        openOfflineNewsEvent.call()
+    }
+
+    fun loadOfflineMovies() {
+        openOfflineMoviesEvent.call()
+    }
 }

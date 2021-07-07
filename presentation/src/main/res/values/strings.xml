@@ -49,4 +49,7 @@
     <string name="online_title"> You are online!</string>
     <string name="offline_title"> You are offline!</string>
     <string name="action_view_offline"> View offline</string>
+    <string name="title_load_data_error">Load data error</string>
+    <string name="title_offline_news">Offline news</string>
+    <string name="title_offline_movies">Offline movies</string>
 </resources>

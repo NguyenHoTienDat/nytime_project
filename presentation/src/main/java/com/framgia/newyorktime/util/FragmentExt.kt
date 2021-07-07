@@ -1,6 +1,9 @@
 package com.framgia.newyorktime.util
 
 import android.app.Activity
+import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.IBinder
 import android.support.annotation.StringRes
@@ -104,3 +107,8 @@ fun Fragment.setupTheme(@StyleRes styleId: Int = R.style.AppTheme, action: (Acti
         action?.let { it() }
     }
 }
+
+fun <VM : ViewModel, F : ViewModelProvider.Factory> Fragment.getViewModelFragmentBound(
+    viewModelClass: Class<VM>,
+    factory: F? = null
+): VM = ViewModelProviders.of(this, factory).get(viewModelClass)

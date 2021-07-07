@@ -40,14 +40,15 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:tabIndicatorColor="@android:color/white"
                 app:tabMode="fixed"
                 app:tabSelectedTextColor="@android:color/white"
-                app:tabIndicatorColor="@android:color/white"
                 app:tabTextAppearance="@style/TextAppearance.AppCompat.Inverse"
                 app:tabTextColor="@color/color_gray_50_500" />
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/place_holder"
+                pagePosition="@{viewModel.openPageEvent}"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -59,12 +59,13 @@ class MovieRepositoryImpl @Inject constructor(
                 return@flatMap Single.just(results)
             }
 
-    override fun getSearchMovies(query: String, page: Int): Observable<List<Movie>> =
+    override fun getSearchMovies(query: String, page: Int): Observable<MovieInfo> =
         movieApi.getSearchMovies(query, page)
             .flatMap { response ->
+                val totalPage = response.totalPages
                 val results =
                     response.results.map { entity -> movieEntityMapper.mapToDomain(entity) }
-                return@flatMap Observable.just(results)
+                return@flatMap Observable.just(MovieInfo(totalPage, results))
             }
 
     override fun getMoviesByGenre(genreId: String, page: Int): Single<List<Movie>> =

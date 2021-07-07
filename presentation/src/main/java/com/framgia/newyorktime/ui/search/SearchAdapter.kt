@@ -1,21 +1,20 @@
-package com.framgia.newyorktime.ui.main.topratemovies
+package com.framgia.newyorktime.ui.search
 
 import android.support.v7.util.DiffUtil
 import com.framgia.newyorktime.R
 import com.framgia.newyorktime.base.recyclerview.BaseRecyclerViewAdapter
 import com.framgia.newyorktime.base.recyclerview.BaseViewHolder
+import com.framgia.newyorktime.databinding.ItemFavoriteMovieBinding
 import com.framgia.newyorktime.databinding.ItemMovieBinding
 import com.framgia.newyorktime.model.MovieItem
 
 /**
- * Created: 06/08/2018
+ * Created: 08/08/2018
  * By: Sang
  * Description:
  */
-class TopRateMoviesAdapter(private val userActionsListener: TopRateUserActionsListener) :
-    BaseRecyclerViewAdapter<MovieItem,
-            ItemMovieBinding,
-            TopRateMoviesAdapter.ViewHolder>(
+class SearchAdapter(private val userActionsListener: SearchUserActionsListener) :
+    BaseRecyclerViewAdapter<MovieItem, ItemFavoriteMovieBinding, SearchAdapter.ViewHolder>(
         object : DiffUtil.ItemCallback<MovieItem>() {
 
             override fun areItemsTheSame(oldItem: MovieItem, newItem: MovieItem): Boolean =
@@ -27,9 +26,9 @@ class TopRateMoviesAdapter(private val userActionsListener: TopRateUserActionsLi
     ) {
 
     override val layoutInt: Int
-        get() = R.layout.item_movie
+        get() = R.layout.item_favorite_movie
 
-    override fun getViewHolder(viewDataBinding: ItemMovieBinding): ViewHolder =
+    override fun getViewHolder(viewDataBinding: ItemFavoriteMovieBinding): ViewHolder =
         ViewHolder(viewDataBinding)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -49,5 +48,5 @@ class TopRateMoviesAdapter(private val userActionsListener: TopRateUserActionsLi
         }
     }
 
-    class ViewHolder(binding: ItemMovieBinding) : BaseViewHolder<ItemMovieBinding>(binding)
+    class ViewHolder(binding: ItemFavoriteMovieBinding) : BaseViewHolder<ItemFavoriteMovieBinding>(binding)
 }
